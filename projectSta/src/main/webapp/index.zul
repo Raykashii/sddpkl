@@ -12,31 +12,99 @@
 	xmlns:h="http://www.w3.org/1999/xhtml"
 	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
 
-	<style>
-		#fmlogin { background-color: #ffffff; border-radius: 20px;
-		padding-top: 40px; padding-bottom: 10px; }
-		
-		#WelcomeMSG {
-			font-weight: bold;
-			font-size: 24px;
-			margin-bottom: 20px; 
-			color: #333; 
-			
-			 .large-textbox {
-        font-size: 18px; 
-        height: 50px;
-        padding: 10px; 
+		<style>
+    /* Style untuk form login */
+    #fmlogin {
+    
+        background-color: #ffffff;
+        border-radius: 20px;
+        padding-top: 40px;
+        padding-bottom: 20px;
+        
     }
-		}
-	</style>
+    
+    /* Style untuk teks 'Welcome back' */
+    #WelcomeMSG {
+        font-weight: bold;
+        font-size: 35px;
+        margin-bottom: 40px;
+        color: #1E2A5E;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    #WelcomeMSG:hover {
+        color: #A04747;
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Style untuk input textbox */
+    .large-textbox {
+    font-size: 18px;
+    height: 50px;
+    padding: 10px 20px; /* Tambahkan padding horizontal untuk memberi lebih banyak ruang */
+    border-radius: 10px; /* Border yang sedikit lebih tajam */
+    border: 1px solid #ccc; /* Border tipis */
+    background-color: #f9f9f9; /* Warna latar belakang sedikit abu-abu */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tambahkan shadow */
+    transition: all 0.3s ease; /* Efek transisi yang halus */
+}
+
+.large-textbox:focus {
+    border-color: #1E2A5E; /* Ubah warna border saat fokus */
+    background-color: #ffffff; /* Buat background menjadi putih saat difokuskan */
+    box-shadow: 0 8px 15px rgba(30, 42, 94, 0.2); /* Tambahkan shadow lebih besar saat fokus */
+    outline: none; /* Hilangkan outline default */
+}
+
+/* Tambahkan gaya untuk memperbaiki label */
+label {
+    font-size: 16px;
+    color: #1E2A5E;
+    margin-bottom: 10px;
+}
+    
+    /* Style untuk button */
+    .btn {
+        background-color: #E8B86D;
+        color: black;
+        font-size: 18px;
+        padding: 15px;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .btn:hover {
+        background-color: #A04747;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Style untuk copyright section */
+    .mt-5 {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #555;
+    }
+    
+    /* Style untuk gambar di bawah */
+    .img-fluid {
+        transition: transform 0.3s ease;
+    }
+    
+    .img-fluid:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+	
 	<div id="bdlogin" class="container-fluid"
-		style="background-image: url('images/asset/bglogin.png'); background-repeat: no-repeat; background-attachment: inherit;
+		style="background-image: url('images/asset/bglast2.png'); background-repeat: no-repeat; background-attachment: inherit;
 		background-position: center; background-size: cover;"
 		viewModel="@id('vm') @init('com.projectSta.viewmodel.AuthLogin')">
 		<div class="row animated fadeIn vh-100">
 			<div
 				class="col-md-4 offset-md-1 text-center my-auto">
-				<n:div id="WelcomeMSG">Welcome back!</n:div>
+				<n:div id="WelcomeMSG">Hi There !</n:div>
 				<n:form id="fmlogin"
 					class="text-center pl-4 pr-4" style="border: none;">
 					<label sclass="text-danger"
@@ -49,7 +117,7 @@
 						type="password" maxlength="20"
 						sclass="form-control form-control-md mb-4 rounded-pill large-textbox"
 						onOK="@command('doLogin')" placeholder="Password" />
-					<button onClick="@command('doLogin')" style="background-color: #1E2A5E; color:white;"
+					<button onClick="@command('doLogin')"
 						autodisable="self"
 						class="btn btn-block my-4 rounded-pill" label="LOGIN" />
 				</n:form>

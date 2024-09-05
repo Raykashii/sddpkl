@@ -15,8 +15,8 @@
 			<property name="hibernate.connection.username">afi</property> <property name="connection.password">admin123</property> -->
 
 		<property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=master</property>
-		<property name="hibernate.connection.username">rasya</property>
-		<property name="connection.password">achaAl88</property>
+		<property name="hibernate.connection.username">usergacor</property>
+		<property name="connection.password">user</property>
 
 		<!-- <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=STATISTIKANTASENA</property> 
 			<property name="hibernate.connection.username">pku</property> <property name="connection.password">pku</property> -->
