@@ -1,0 +1,54 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+	
+	<window viewModel="@id('vm') @init('com.sdd.statistikantasena.viewmodel.ProfileVm')" id="win">
+		<caption style="padding: 0px; color: #f2f2f2;" iconSclass="fa fa-lg fa-cogs" label="User Profile" />
+		<div class="card">
+		<div class="card-header" style="background-color: white;">
+			<n:h5>
+				<n:i class="fa fa-list"></n:i>
+				MY PROFILE
+			</n:h5>
+		</div>
+		<div class="card-body" style="padding-top: 10px">
+			<groupbox>
+					<grid>
+			<columns>
+				<column width="30%"></column>
+				<column width="70%"></column>
+			</columns>
+			<rows>
+				<row>
+					<label value="Userid"></label>
+					<label value="@bind(vm.obj.userid)"></label>
+					</row>
+				<row>
+					<label value="Username"></label>
+					<label value="@bind(vm.obj.username)"></label>
+				</row>
+				<row>
+					<label value="Email"></label>
+					<label value="@bind(vm.obj.email)"></label>
+				</row>
+				<row>
+					<label value="Usergroup"></label>
+					<label value="@bind(vm.obj.musergroup.usergroupname)"></label>
+				</row>
+			
+			</rows>
+		
+		</grid>
+			</groupbox>
+		</div>
+	
+	</div>
+		
+	</window>
+</zk>

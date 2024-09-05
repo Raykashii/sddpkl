@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/asset/Asset 3@10x.png" ?>
+
+<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css" ?>
+
+<?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
+<!-- Favicon and touch icons -->
+<?link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png" ?>
+<?link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png" ?>
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<h:meta charset="utf-8"></h:meta>
+	<h:meta http-equiv="X-UA-Compatible" content="IE=Edge"></h:meta>
+	<h:meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	</h:meta>
+	<script src="/assets/js/plugins.js"></script>
+	<style>
+		#fmlogin { background-color: white; border-radius: 20px;
+		padding-top: 40px; padding-bottom: 10px; }
+	</style>
+	<div id="bdlogin" class="container-fluid"
+		style="padding-right:0px; padding-left:0px; background-image: url('images/asset/bglogintimeout.png'); background-repeat: no-repeat; background-attachment: inherit;
+		background-position: center; background-size: cover;">
+		<div class="body-header sticky-md-top">
+			<div class="container-fluid border-1">
+				<div class="d-flex justify-content-between">
+					<a
+						class="navbar-brand d-flex align-items-center color-900"
+						href="index-2.html">
+
+					</a>
+					<div id="menuRoot" class="menu-link flex-fill" />
+					<h:ul
+						class="navbar-right d-flex align-items-center mb-0 list-unstyled">
+						<h:li>
+
+						</h:li>
+					</h:ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="row animated fadeIn vh-100">
+
+			<div class="col-md-4 offset-md-8 text-center my-auto pr-5 mr-5">
+				<n:form id="fmlogin"
+					class="text-center border-1 z-depth-1-half pl-4 pr-4"
+					style="background-color: #f3fdff !important;">
+					<n:p class="card-text">
+						Halaman tidak lagi tersedia.
+						<n:br />
+						Silahkan login untuk menggunakan aplikasi
+						kembali.
+						<n:br />
+						<n:br />
+						<n:br />
+
+
+					</n:p>
+					<n:a href="/projectSta/index.zul">
+						<button autodisable="self"
+							style="background-color: #0069ab !important; color:white"
+							class="btn btn-info btn-block my-4 rounded-pill"
+							label="Kembali ke Halaman Login"
+							tooltiptext="Kembali ke Halaman Login" />
+					</n:a>
+
+				</n:form>
+				<div class="mt-5 text-center">
+					<n:h6 style="color: #002459; font-weight: bold;">
+						PT. Bank Negara Indonesia Tbk.
+					</n:h6>
+					<n:span style="color: #002459;">
+						&#169; Copyright
+					</n:span>
+					<n:img src="mdb/img/BNI.png" class="img-fluid mr-3"
+						width="60px" height="35px">
+					</n:img>
+					<n:span style="color: #002459;">Powered By</n:span>
+					<n:img src="images/sdd.png" class="img-fluid"
+						width="60px" height="30px">
+					</n:img>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="mdb/js/jquery-3.4.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="mdb/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+</zk>

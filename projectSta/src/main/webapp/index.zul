@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+
+<?link rel="stylesheet" type="text/css"	href="mdb/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css" href="mdb/css/mdb.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="font-awesome/css/all.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css" ?>
+
+<?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+
+	<style>
+		#fmlogin { background-color: #ffffff; border-radius: 20px;
+		padding-top: 40px; padding-bottom: 10px; }
+		
+		#WelcomeMSG {
+			font-weight: bold;
+			font-size: 24px;
+			margin-bottom: 20px; 
+			color: #333; 
+			
+			 .large-textbox {
+        font-size: 18px; 
+        height: 50px;
+        padding: 10px; 
+    }
+		}
+	</style>
+	<div id="bdlogin" class="container-fluid"
+		style="background-image: url('images/asset/bglogin.png'); background-repeat: no-repeat; background-attachment: inherit;
+		background-position: center; background-size: cover;"
+		viewModel="@id('vm') @init('com.projectSta.viewmodel.AuthLogin')">
+		<div class="row animated fadeIn vh-100">
+			<div
+				class="col-md-4 offset-md-1 text-center my-auto">
+				<n:div id="WelcomeMSG">Welcome back!</n:div>
+				<n:form id="fmlogin"
+					class="text-center pl-4 pr-4" style="border: none;">
+					<label sclass="text-danger"
+						value="@bind(vm.lblMessage)" />
+					<textbox id="tbUsername" value="@bind(vm.userid)"
+						maxlength="15" focus="true"
+						sclass="form-control form-control-md mb-4 rounded-pill large-textbox"
+						placeholder="Username" />
+					<textbox id="tbPassword" value="@bind(vm.password)"
+						type="password" maxlength="20"
+						sclass="form-control form-control-md mb-4 rounded-pill large-textbox"
+						onOK="@command('doLogin')" placeholder="Password" />
+					<button onClick="@command('doLogin')" style="background-color: #1E2A5E; color:white;"
+						autodisable="self"
+						class="btn btn-block my-4 rounded-pill" label="LOGIN" />
+				</n:form>
+				<div class="mt-5">
+					<n:span>&#169; Copyright</n:span>
+					<n:img src="images/bni.png" class="img-fluid mr-3"
+						width="60px" height="30px">
+					</n:img>
+					<n:span>Powered By</n:span>
+					<n:img src="images/sdd.png" class="img-fluid"
+						width="60px" height="30px">
+					</n:img>
+				</div>
+			</div>
+			<div class="col-md-7 my-auto"></div>
+		</div>
+	</div>
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="mdb/js/jquery-3.4.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="mdb/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+	<script type="text/javascript" src="/assets/js/theme.js"></script>
+	<script type="text/javascript"
+		src="/assets/js/bundle/owlcarousel.bundle.js" />
+	<script src="/assets/js/bundle/sweetalert2.bundle.js"></script>
+	<script src="/config.js"></script>
+
+</zk>

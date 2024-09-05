@@ -1,0 +1,89 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+	
+	<window viewModel="@id('vm')@init('com.projectSta.viewmodel.MusergroupFormVM')" validationMessages="@id('vmsgs')" id="winUsergroupform" contentStyle="border-radius: 7px;">
+		<caption style="padding: 0px; color: #f2f2f2;" iconSclass="fa fa-lg fa-cogs" label="${labels.usergroup.usergroupform}" />
+		<div class="card">
+			<div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+				<grid style="border:none !important">
+					<columns>
+						<column width="35%" />
+						<column width="65%" />
+					</columns>					
+					<rows>
+						<row>
+							<hlayout>
+								<label value="${labels.usergroup.usergroupcode}" />
+								<label style="color: red" value="*" />
+							</hlayout>
+							<vlayout>
+								<textbox id="tbUsergroupcode" value="@bind(e.usergroupcode)" cols="33" maxlength="20" />
+								<label value="@load(vmsgs['usergroupcode'])" style="color:red" />
+							</vlayout>
+						</row>
+						<row>
+							<hlayout>
+								<label value="${labels.usergroup.usergroupname}" />
+								<label style="color:red">*</label>
+							</hlayout>
+							<vlayout>
+								<textbox id="tbUsergroupname" value="@bind(e.usergroupname)" cols="33" maxlength="40" />
+								<label value="@load(vmsgs['usergroupname'])" style="color:red" />
+							</vlayout>
+						</row>
+						<row>
+							<hlayout>
+								<label value="${labels.usergroup.usergroupdesc}" />
+							</hlayout>
+							<vlayout>
+								<textbox value="@bind(e.usergroupdesc)" cols="35" rows="4" maxlength="100" id="tbUsergroupdesc" />
+							</vlayout>
+						</row>
+					</rows>
+				</grid>
+				<separator />
+				<grid id="gridSetup" style="border-radius: 7px;">
+					<rows>
+						<row style="background-color: #2F3061;">
+							<label value="Set Up Menu" Style="color: #f2f2f2 !important; font-weight: bold !important; font-size: 14px !important;" />
+						</row>
+						<row>
+							<div id="divListMenu" />
+						</row>
+					</rows>
+				</grid>
+				<groupbox title="Daftar Menu" closable="false"
+					id="gbDaftar">
+					<grid mold="paging" pageSize="10"
+						pagingPosition="top" sclass="table-bordered" id="gridMenu"
+						emptyMessage="${labels.common.emptymsg}">
+						<columns style="border: 0px; border-bottom: 1px solid #ffffff;">
+							<column label="No." width="40px"
+								align="right"
+								style="background-color: #2F3061; border :0px; border-bottom :1px solid #fff; color: #000000; font-weight: bold; font-size: 14px; color: #ffffff;" />
+							<column label="SubMenu - Menu"
+								style="background-color: #2F3061; border :0px; border-bottom :1px solid #fff; color: #000000; font-weight: bold; font-size: 14px; color: #ffffff;" />
+						</columns>
+					</grid>
+				</groupbox>
+				<div id="divFooter" class="card-footer" style="border: 0px; padding: 10px 0px 0px 0px; background-color: #ffffff; padding-right: 16px;" align="right">
+					<button id="btnCancel" label="Batal"
+						onClick="@command('doReset')" autodisable="self"
+						sclass="btn btn-default btn-sm" width="100px"
+						iconSclass="z-icon-times" />
+					<separator orient="vertical" />
+					<button id="btnSave" label="Simpan"
+						autodisable="self" sclass="btn btn-primary btn-sm" width="100px"
+						iconSclass="z-icon-save" onClick="@command('doSave')" />
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

@@ -1,0 +1,136 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:w="client" xmlns:n="native">
+	<div
+		viewModel="@id('vm') @init('com.projectSta.viewmodel.DashboardVm')">
+		<div class="card text-center">
+			<div class="card-header ">
+				<n:h4>DATA KREDIT PERTAHUN</n:h4>
+			</div>
+			<div class="card-body">
+				<div id="divCartLineKredit" />
+			</div>
+		</div>
+		<separator height="50px" />
+		<div class="card text-center">
+			<div class="card-header ">
+				<n:h4>DATA KREDIT KEPADA BANK PERTAHUN</n:h4>
+			</div>
+			<div class="card-body">
+				<div id="divChartKreditKepadaBank" />
+			</div>
+		</div>
+		<separator height="50px" />
+		<div class="card text-center">
+			<div class="card-header ">
+				<n:h4>DATA KREDIT KEPADA NON BANK PERTAHUN</n:h4>
+			</div>
+			<div class="card-body">
+				<div id="divChartKreditKepadaNonBank" />
+			</div>
+		</div>
+		<separator height="50px" />
+		<div class="card">
+
+			<div class="card-header ">
+				<n:h4>DATA KREDIT KEPADA NON BANK DALAM SETAHUN</n:h4>
+			</div>
+			<div class="card-body">
+				<div id="divPieKreditBankNonBank" />
+
+			</div>
+		</div>
+		<separator height="50px" />
+		<div class="card">
+			<div class="card-header ">
+				<n:h4>DATA KREDIT BANK DAN NON BANK</n:h4>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-10">
+						<label value="Tahun Sebelum" />
+						<combobox id="cbyear3" cols="20"
+							selectedItem="@bind(vm.year3)" />
+						<label value="Tahun Sesudah" />
+						<combobox id="cbyear4" cols="20"
+							selectedItem="@bind(vm.year4)" />
+						<button
+							style="border-radius: 8px; background-color: #F49D1A !important; color: #ffffff !important;"
+							sclass="btn-default" label="Apply Filter"
+							onClick="@command('doSearchKreditYoy')" />
+					</div>
+				</div>
+				<div id="divbanknonbankyoy" />
+			</div>
+		</div>
+		<separator height="50px" />
+		<div class="card">
+			<div class="card-header">
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-2">
+						<label value="Year" style="font-weight: bold" />
+						<intbox cols="7"
+							value="@bind(vm.productbyyear)" />
+					</div>
+					<div class="col-10">
+						<label value="Month" />
+						<combobox id="cbMonth" cols="20"
+							selectedItem="@bind(vm.monthchart)" />
+						<button
+							style="border-radius: 8px; background-color: #F49D1A !important; color: #ffffff !important;"
+							sclass="btn-default" label="Apply Filter"
+							onClick="@command('doSearchbyMonth')" />
+					</div>
+				</div>
+				<div align="center">
+					<label value="@load(vm.time)"></label>
+				</div>
+				<div id="divPieDpk" />
+			</div>
+		</div>
+
+		<separator height="50px" />
+		
+		<div class="card text-center">
+			<div class="card-header ">
+				<n:h4>DATA DPK PERTAHUN </n:h4>
+			</div>
+			<div class="card-body">
+				<div id="divChartSumDPK" />
+			</div>
+		</div>
+		<separator height="50px" />
+		<div class="card text-center">
+			<div class="card-header ">
+				<n:h4>DATA DPK</n:h4>
+			</div>
+			<div class="card-body">
+				<div id="divCartLine" />
+			</div>
+		</div>
+		<separator height="50px" />
+		<div class="card">
+			<div class="card-header ">
+				<n:h4>DATA DPK PER PRODUCT YOY</n:h4>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-10">
+						<label value="Tahun Sebelum" />
+						<combobox id="cbyear1" cols="20"
+							selectedItem="@bind(vm.year1)" />
+						<label value="Tahun Sesudah" />
+						<combobox id="cbyear2" cols="20"
+							selectedItem="@bind(vm.year2)" />
+						<button
+							style="border-radius: 8px; background-color: #F49D1A !important; color: #ffffff !important;"
+							sclass="btn-default" label="Apply Filter"
+							onClick="@command('doSearchDpkYoy')" />
+					</div>
+				</div>
+				<div id="divchartdpkyoy" />
+			</div>
+		</div>
+	</div>
+</zk>

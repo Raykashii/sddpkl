@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+		<!-- <property name="hibernate.connection.url">jdbc:sqlserver://10.12.32.52:1433;databaseName=STATISTIKANTASENA</property> -->
+		<!-- <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=STATISTIKANTASENA</property> -->
+
+		<!-- <property name="hibernate.connection.username">sa</property> <property 
+			name="connection.password">BNI46sql</property> -->
+
+		<!-- <property name="hibernate.connection.url">jdbc:sqlserver://localhost:50256;databaseName=STATISTIKANTASENA</property> 
+			<property name="hibernate.connection.username">afi</property> <property name="connection.password">admin123</property> -->
+
+		<property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=master</property>
+		<property name="hibernate.connection.username">rasya</property>
+		<property name="connection.password">achaAl88</property>
+
+		<!-- <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=STATISTIKANTASENA</property> 
+			<property name="hibernate.connection.username">pku</property> <property name="connection.password">pku</property> -->
+
+		<property name="hibernate.jdbc.batch_size">20</property>
+		<property name="hibernate.cache.use_second_level_cache">false</property>
+
+		<!-- Use the C3P0 connection pool. -->
+		<property name="c3p0.min_size">10</property>
+		<property name="c3p0.max_size">300</property>
+		<property name="c3p0.timeout">1800</property>
+
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Disable second-level cache. -->
+		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+		<property name="cache.use_query_cache">false</property>
+		<!-- <property name="cache.use_minimal_puts">false</property> <property 
+			name="max_fetch_depth">3</property> -->
+
+<property name="hibernate.show_sql">true</property>
+<property name="hibernate.format_sql">false</property>
+<!-- <property name="hibernate.use_sql_comments">true</property>
+<property name="hibernate.hbm2ddl.auto">validate</property>
+<property name="hibernate.connection.isolation">2</property> -->
+
+		<!-- <property name="format_sql">true</property> <property name="hbm2ddl.auto"></property> -->
+
+		<mapping class="com.projectSta.domain.Mmenu" />
+		<mapping class="com.projectSta.domain.Mkelas" />
+		<mapping class="com.projectSta.domain.Msiswa" />
+		
+	
+ 		<!-- <mapping class="com.sdd.statistikantasena.domain.Mkodecabang" />
+		<mapping class="com.sdd.statistikantasena.domain.MPgoldeb" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPgolongandeb" />
+		<mapping class="com.sdd.statistikantasena.domain.MPsekek" />
+		<mapping class="com.sdd.statistikantasena.domain.MPsekekgroup" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPjenisasetkeuangan" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPjenisasetlainnya" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPjenisasettetap" />
+		<mapping class="com.sdd.statistikantasena.domain.MPjenisgb" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPjeniskredit" />
+		<mapping class="com.sdd.statistikantasena.domain.MPjenislc" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPjenispenggunaan" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPkategoriportofolio" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPkategoriusahadebitur" />
+		<mapping class="com.sdd.statistikantasena.domain.MPkualitas" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPorientasipenggunaan" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPsifatkredit" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPssbsandiref" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPpinjamanyangditerima" /> -->
+	<mapping class="com.projectSta.domain.MPdpkproduk" />
+		<!-- <mapping
+			class="com.sdd.statistikantasena.domain.MPjenisliabilitas" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPrangetabungan" />  -->
+<!-- 		<mapping class="com.sdd.statistikantasena.domain.Msysparam" />
+ -->		<mapping class="com.projectSta.domain.Muser" />
+		<mapping class="com.projectSta.domain.Musergroup" />
+	 	<mapping
+			class="com.projectSta.domain.Musergroupmenu" /> 
+	 <!-- 	<mapping class="com.sdd.statistikantasena.domain.Takl" />
+		<mapping class="com.sdd.statistikantasena.domain.Tkredit" />
+		<mapping class="com.sdd.statistikantasena.domain.Mhost" />
+		<mapping class="com.sdd.statistikantasena.domain.Mhostds" />
+		<mapping class="com.sdd.statistikantasena.domain.Tchecksrc" />
+		<mapping class="com.sdd.statistikantasena.domain.Tscheduler" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.TchecksrcDetail" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.Tchecksrcgrouped" />
+		<mapping class="com.sdd.statistikantasena.domain.Toutcounter" />
+		<mapping class="com.sdd.statistikantasena.domain.Toutsummary" />
+		<mapping class="com.sdd.statistikantasena.domain.Mdatasource" />
+		<mapping class="com.sdd.statistikantasena.domain.Tscheduler" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.TabletobeTruncate" />
+		<mapping class="com.sdd.statistikantasena.domain.TableName" />
+		<mapping class="com.sdd.statistikantasena.domain.Ttabungan" />
+		<mapping class="com.sdd.statistikantasena.domain.Tgiro" />
+		<mapping class="com.sdd.statistikantasena.domain.Tdeposito" />
+		<mapping class="com.sdd.statistikantasena.domain.Tlbl" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.MPgrouppihaklawan" />
+
+		<mapping class="com.sdd.statistikantasena.domain.Mparam" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.Mgolonganpihaklawan" />
+		<mapping
+			class="com.sdd.statistikantasena.domain.TinputHistory" />
+
+		<mapping class="com.sdd.statistikantasena.model.MDprocessdata" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryAsetKeuanganLainnya" />
+		<mapping class="com.sdd.statistikantasena.model.Mpkredit" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryAsetLainnya" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryLetterofcredit" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryLetterofcreditGolPihaklawan" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryAsettetapInventaris" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryKredit" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryKreditSekek" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryGaransi" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryGaransiGolPihaklawan" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummarySSBSandiref" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryPinjamanyangditerima" />
+		<mapping class="com.sdd.statistikantasena.model.Md_SummaryDpk" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryDpkliabilitas" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryDpkrange" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_Summary5MutasiCabang" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryDpkGolPihaklawan" />
+		<mapping
+			class="com.sdd.statistikantasena.model.Md_SummaryDeposan" />
+		<mapping class="com.sdd.statistikantasena.model.MpAsetLainnya" />
+		<mapping
+			class="com.sdd.statistikantasena.model.MpAsetTetapInventaris" />
+		<mapping class="com.sdd.statistikantasena.model.MpLc" />
+		<mapping class="com.sdd.statistikantasena.model.MpGaransi" />
+		<mapping
+			class="com.sdd.statistikantasena.model.MpPinjamanyangditerima" />
+		<mapping class="com.sdd.statistikantasena.model.MpSsb" />
+		<mapping class="com.sdd.statistikantasena.model.MpDpk" />
+		<mapping
+			class="com.sdd.statistikantasena.model.ExportAsetInventaris" /> -->
+		<mapping class="com.projectSta.model.V_Dpk" />
+		<mapping class="com.projectSta.model.V_AllDpk" />
+		<mapping class="com.projectSta.model.VDataTotal" />
+		<mapping class="com.projectSta.model.Mtable" />
+		<!-- <mapping
+			class="com.sdd.statistikantasena.model.MD_SummaryDetailA" />
+		<mapping
+			class="com.sdd.statistikantasena.model.MD_SummaryDetailB" />
+		<mapping
+			class="com.sdd.statistikantasena.model.MD_SummaryDetailC" />
+		<mapping
+			class="com.sdd.statistikantasena.model.MD_SummaryDetailD" />
+		<mapping
+			class="com.sdd.statistikantasena.model.MD_SummaryDetailE" />
+		<mapping
+			class="com.sdd.statistikantasena.model.MD_SummaryDetailTop5Mutasi" /> -->
+		<mapping class="com.projectSta.model.V_SumDPK" /> 
+	</session-factory>
+</hibernate-configuration>

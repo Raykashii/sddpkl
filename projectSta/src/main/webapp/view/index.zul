@@ -1,0 +1,203 @@
+<?page title="${desktop.webApp.appName}"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+<?link rel="stylesheet" type="text/css"	href="/mdb/css/style.css" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="../images/asset/arasaka.png" ?>
+<?link rel= "stylesheet" type = "text/css" href= "/asset/css/bootstrap.min.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/custom.css?v=12241" ?>
+<?link rel="stylesheet" type="text/css"	href="/assets/css/avio-style.css" ?>
+<?link rel="stylesheet" type="text/css"	href="/css/custom.css?v=454" ?>
+<?link rel="stylesheet" type="text/css"	href="/font-awesome/css/all.css" ?>
+
+<zk xmlns:w="client" xmlns:n="native"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:ca="http://www.zkoss.org/2005/zk/client/attribute">
+	<h:meta charset="utf-8"></h:meta>
+	<h:meta http-equiv="X-UA-Compatible" content="IE=Edge"></h:meta>
+	<h:meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	</h:meta>
+	<script src="/assets/js/plugins.js"></script>
+ 	<zscript>
+ 		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null) {
+			Executions.sendRedirect("/timeout.zul");
+		}
+	</zscript>
+	
+	<div class="avio" viewModel="@id('vm') @init('com.projectSta.viewmodel.UserInitVm')">
+		<div class="body-header sticky-md-top" style="background-color: #f3fdff;">
+			<div class="container-fluid" style="font-size: 12px;">
+				<div class="d-flex justify-content-between">
+					<a class="navbar-brand d-flex align-items-center color-900" href="index.zul">
+						<n:img src="../images/asset/arasaka.png" width="70px" class="img-fluid no-filter" style="margin-top:3px;" />
+					</a>
+					<div id="menuRoot" class="menu-link flex-fill"/>
+					<h:ul class="navbar-right d-flex align-items-center mb-0 list-unstyled">
+						<h:li>
+							<div class="dropdown morphing scale-left user-profile mx-lg-3 mx-2">
+								<a class="nav-link dropdown-toggle rounded-circle after-none p-0" href="#" ca:role="button" ca:data-bs-toggle="dropdown">
+									<h:img class="avatar lg img-thumbnail rounded-circle shadow" src="../images/iconprofile.png" alt="" />
+								</a>
+								<div class="dropdown-menu border-0 rounded-4 shadow p-0">
+									<div class="card overflow-hidden" style="width:18rem">
+										<div class="card-body">
+											<h:h6 class="card-title mb-0">
+												<label value="Selamat Datang," />
+											</h:h6>
+											<h:p class="text-muted" style="font-weight:bold">
+												${oUser.username} - ${oUser.userid} 
+											</h:p>
+
+											<separator />
+											<separator />
+											<hlayout>
+											<a href="" class="btn btn-sm-light bg-primary text-light text-uppercase">
+												<label style="color:white" onClick="@command('viewProfil')">Profile</label>
+											</a>
+											<separator width="5px"></separator>
+											<a href="" class="btn btn-sm bg-danger text-light text-uppercase ">
+												<label style="color:white" onClick="@command('doChangePassword')">Ganti Password</label>
+											</a>
+											</hlayout>
+											
+											<separator />
+											<a href="" class="btn btn-sm bg-primary text-light text-uppercase w-100" onClick="@command('doLogout')">
+												Sign out
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</h:li>
+					</h:ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="page-header pattern-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12 mb-2">
+						<h:ol class="mb-2" />
+						<div class="d-flex justify-content-between align-items-center">
+							<h:h1 class="h3 mb-md-0 text-white fw-light">
+								<span id="namaMenu"></span>
+							</h:h1>
+							<div class="page-action"/>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="page-body" style="background-image: url('bg.jpg'); background-size: cover; background-attachment: fixed;">
+			<div class="container-fluid">
+				<separator height="50px" />
+					<div id="divContent"/>
+				<separator height="50px" />
+			</div>
+		</div>
+		
+		<div class="page-footer bg-card mt-4" style="margin-top: 0px !important; background-color: #e27d3b !important">
+			<div class="container-fluid">
+				<h:footer
+					class="d-flex flex-wrap justify-content-between align-items-center py-2">
+					<h:p class="col-md-5 mb-0" style="color; #000000; font-weight: bold; float: right;">
+						LBUT STATISTIK 1.0
+					</h:p>
+				</h:footer>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="/assets/js/theme.js"></script>
+	<script type="text/javascript" src="/assets/js/bundle/owlcarousel.bundle.js"/>
+	<script src="/assets/js/bundle/sweetalert2.bundle.js"></script>
+	<script src="/config.js"></script>
+
+	<script>
+		//theme body
+
+		function startTheme(){ let body =
+		document.getElementsByTagName("body");
+		body[0].setAttribute("data-avio", "theme-blue");
+ 
+		$('.owl-carousel').owlCarousel({ loop:true,
+		responsiveClass:true, margin:10, autoplay: true,
+		autoplayTimeout: 2000, autoplayHoverPause: true }) }
+
+		const scrollTo = (el) => { console.log(el);
+		document.getElementsByClassName(el)[0].scrollIntoView({behavior:
+		'smooth', block: 'start'});
+		}
+
+		//ws monitoring
+				
+//			var connected = false;
+//			var socket;
+//			
+//			function connect() {
+//			    if (! connected) {
+//			      
+//			        socket = new WebSocket("ws://localhost:9000/monitoring/");
+//			        
+//					socket.onclose = async function(){
+//				            connected = false;
+//				            console.log("ws monitoring close");
+//				
+//				            console.log("ws monitoring reconnecting");
+//				            socket.close();
+//				            
+//				              setTimeout(function() {
+//						      connect();
+//						      $(".status-ws").text("Reconnecting").css('color', 'red');
+//						    }, 1000);
+//				     
+//				    };
+//				    
+//			        socket.onopen = function() {
+//			            connected = true;
+//			            console.log("Connected to the web socket");
+//			          
+//			            $(".status-ws").text("Connected").css('color', 'green');
+//			        };
+//			        
+//			        socket.onmessage =function(m) {
+//			            console.log("Got message: " + m.data);
+//			             $("#sad").text(m.data);
+//			         
+//			        };
+//			    }
+//			}
+			//connect();
+			
+			//sleep
+			function sleep(ms) {
+			    return new Promise(resolve => setTimeout(resolve, ms));
+			}
+
+	</script>
+
+	<script>
+		const toastTemplate1 = Swal.mixin({
+		  toast: true,
+		  position: 'top-end',
+		  showConfirmButton: false,
+		  timer: 1200,
+		  timerProgressBar: true,
+		  didOpen: (toast) => {
+		    toast.addEventListener('mouseenter', Swal.stopTimer)
+		    toast.addEventListener('mouseleave', Swal.resumeTimer)
+		  }
+		});
+		
+		function showToast1(icon, msg){
+			toastTemplate1.fire({
+			  icon: icon,
+			  title: msg
+			});
+		}
+
+	</script>
+
+</zk>

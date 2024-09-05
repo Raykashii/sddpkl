@@ -1,0 +1,65 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+	
+	<window viewModel="@id('vm')@init('com.projectSta.viewmodel.MkelasformVM')" validationMessages="@id('vmsgs')" id="winUsergroupform" contentStyle="border-radius: 7px;">
+		<caption style="padding: 0px; color: #f2f2f2;" iconSclass="fa fa-lg fa-cogs" label="${labels.kelas.kelasform}" />
+		<div class="card">
+			<div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+				<grid style="border:none !important">
+					<columns>
+						<column width="35%" />
+						<column width="65%" />
+					</columns>					
+					<rows>
+						<row>
+							<hlayout>
+								<label value="${labels.kelas.kodekelas}" />
+								<label style="color: red" value="*" />
+							</hlayout>
+							<vlayout>
+								<textbox id="tbCodekelasSiswa" value="@bind(e.kodekelas)" cols="33" maxlength="20" />
+								<label value="@load(vmsgs['kodekelas'])" style="color:red" />
+							</vlayout>
+						</row>
+						<row>
+							<hlayout>
+								<label value="${labels.kelas.namakelas}" />
+								<label style="color:red">*</label>
+							</hlayout>
+							<vlayout>
+								<textbox id="tbNamaKelasSiswa" value="@bind(e.namakelas)" cols="33" maxlength="40" />
+								<label value="@load(vmsgs['namakelas'])" style="color:red" />
+							</vlayout>
+						</row>
+						<row>
+							<hlayout>
+								<label value="${labels.kelas.desc}" />
+							</hlayout>
+							<vlayout>
+								<textbox value="@bind(e.kelasdesc)" cols="35" rows="4" maxlength="100" id="tbDescKelasSiswa" />
+							</vlayout>
+						</row>
+					</rows>
+				</grid>
+				<separator />
+				<div id="divFooter" class="card-footer" style="border: 0px; padding: 10px 0px 0px 0px; background-color: #ffffff; padding-right: 16px;" align="right">
+					<button id="btnCancel" label="Batal"
+						onClick="@command('doReset')" autodisable="self"
+						sclass="btn btn-default btn-sm" width="100px"
+						iconSclass="z-icon-times" />
+					<separator orient="vertical" />
+					<button id="btnSave" label="Simpan"
+						autodisable="self" sclass="btn btn-primary btn-sm" width="100px"
+						iconSclass="z-icon-save" onClick="@command('doSave')" />
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>

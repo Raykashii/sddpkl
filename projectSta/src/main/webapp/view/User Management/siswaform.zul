@@ -1,0 +1,93 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+	
+	<window viewModel="@id('vm') @init('com.projectSta.viewmodel.MsiswaformVM')" validationMessages="@id('vmsgs')" id="winUserform" contentStyle="border-radius: 7px;">
+		<caption style="padding: 0px; color: #f2f2f2;" iconSclass="fa fa-lg fa-cogs" label="${labels.siswa.form}" />
+			<div class="card">
+				<div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+					<grid style="border:none !impotrant">
+						<columns>
+							<column width="30%" />
+							<column width="75%" />
+						</columns>
+						<rows>
+							<row id="rowuserid">
+								<hlayout>
+									<label
+										value="${labels.siswa.nisn}" />
+									<label style="color: red" value="*" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbNisn" value="@bind(e.nisn)" cols="35" maxlength="15" />
+									<label value="@load(vmsgs['nisn'])" style="color: red" />
+								</vlayout>
+							</row>
+							<row id="rowusername">
+								<hlayout>
+									<label value="${labels.siswa.nama}" />
+									<label style="color: red" value="*" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbNama" value="@bind(e.namasiswa)" cols="35" maxlength="40"/>
+									<label value="@load(vmsgs['namasiswa'])" style="color: red" />
+								</vlayout>
+							</row>
+						<row>
+				    <hlayout>
+				        <label value="${labels.siswa.kelamin}" />
+				        <label style="color: red" value="*" />
+				    </hlayout>
+				    <vlayout>
+				        <groupbox mold="3d">
+				            <radiogroup id="RgKelamin" selectedItem="@bind(e.jeniskelamin)">
+				                <radio label="L" value="L" />
+				                <radio label="P" value="P" />
+				            </radiogroup>
+				        </groupbox>
+				        <label value="@load(vmsgs['jeniskelamin'])" style="color: red" />
+				    </vlayout>
+				</row>
+
+							<row id="rowmusergroup">
+								<hlayout>
+									<label value="${labels.siswa.kelas}" />
+									<label style="color: red">*</label>
+								</hlayout>
+								<vlayout>
+									<combobox id="cbUsergroup" placeholder="Pilih Kelas"
+										model="@load(vm.userGrupmodel)" cols="30"
+										selectedItem="@bind(e.mkelasfk)">
+										<template name="model"
+											var="musergroup">
+											<comboitem
+												label="@load(musergroup.namakelas)" />
+										</template>
+									</combobox>
+									<label value="@load(vmsgs['musergroup'])" style="color: red" />
+								</vlayout>
+							</row>
+								
+						</rows>
+					</grid>
+				</div>
+				<div id="divFooter" class="card-footer" style="border: 0px; padding: 10px 0px 0px 0px; background-color: #ffffff; padding-right: 16px;" align="right">
+					<button id="btnCancel" label="Batal"
+						onClick="@command('doReset')" autodisable="self"
+						sclass="btn btn-default btn-sm" width="100px"
+						iconSclass="z-icon-times" />
+					<separator orient="vertical" />
+					<button id="btnSave" label="Simpan"
+						autodisable="self" sclass="btn btn-primary btn-sm" width="100px"
+						iconSclass="z-icon-save" onClick="@command('doSave')" />
+				</div>
+			</div>
+		<separator />
+	</window>
+</zk>

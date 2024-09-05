@@ -1,0 +1,66 @@
+:root{
+	--chart-color1:#49b468!important;
+	}
+
+body{
+	padding: 0px!important;
+	margin: 0px!important;
+	background-image: url("/tjsl/images/bg-dood.jpg")!important;
+	background-repeat: repeat;
+}
+
+.avio .page-body::after{
+	
+}
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.no-filter{
+	filter: none!important;
+   
+}
+
+.chart-color0 {
+	background-color:#fcda32!important;
+}
+
+.text-light1{
+	color: none!important;
+}
+
+.swal2-container{
+	z-index: 9999999999999!important;
+}
+
+.z-loading {
+    top: 40% !important;
+    left: 48% !important;
+    background: transparent;
+    z-index: 31000;
+} 
+
+
+.z-loading-icon {
+    width: 100px;
+    height: 100px;
+    background: transparent no-repeat center;
+    background-image: url(/statistikantasena/images/load.gif) !important;
+    background-size: contain;
+    display: block;
+    vertical-align: top;
+    position: relative;
+    left: -37%;
+    margin-left: -10px;
+    margin-bottom: 0;
+}
+
+.z-loading-indicator {
+    padding: 10px 16px 4px;
+    text-align: center;
+    background: transparent !important;
+    color: transparent !important;
+}

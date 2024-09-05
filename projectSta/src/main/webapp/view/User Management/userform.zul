@@ -1,0 +1,122 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+	
+	<window viewModel="@id('vm') @init('com.projectSta.viewmodel.MuserFormVM')" validationMessages="@id('vmsgs')" id="winUserform" contentStyle="border-radius: 7px;">
+		<caption style="padding: 0px; color: #f2f2f2;" iconSclass="fa fa-lg fa-cogs" label="${labels.user.userform}" />
+			<div class="card">
+				<div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+					<grid style="border:none !impotrant">
+						<columns>
+							<column width="25%" />
+							<column width="75%" />
+						</columns>
+						<rows>
+							<row id="rowuserid">
+								<hlayout>
+									<label
+										value="${labels.user.userid}" />
+									<label style="color: red" value="*" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbUserid" value="@bind(e.userid)" cols="35" maxlength="15" />
+									<label value="@load(vmsgs['userid'])" style="color: red" />
+								</vlayout>
+							</row>
+							<row id="rowusername">
+								<hlayout>
+									<label value="${labels.user.username}" />
+									<label style="color: red" value="*" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbUsername" value="@bind(e.username)" cols="35" maxlength="40"/>
+									<label value="@load(vmsgs['username'])" style="color: red" />
+								</vlayout>
+							</row>
+							<row id="rowemail">
+								<hlayout>
+									<label value="${labels.user.email}" />
+									<label style="color: red" value="*" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbEmail" value="@bind(e.email)" cols="35" maxlength="40" />
+									<label value="@load(vmsgs['email'])" style="color: red" />
+								</vlayout>
+							</row>
+							<row id="rowmusergroup">
+								<hlayout>
+									<label value="${labels.user.usergroup}" />
+									<label style="color: red">*</label>
+								</hlayout>
+								<vlayout>
+									<combobox id="cbUsergroup" placeholder="Pilih User Group"
+										model="@load(vm.userGrupmodel)" cols="30"
+										selectedItem="@bind(e.musergroup)">
+										<template name="model"
+											var="musergroup">
+											<comboitem
+												label="@load(musergroup.usergroupname)" />
+										</template>
+									</combobox>
+									<label value="@load(vmsgs['musergroup'])" style="color: red" />
+								</vlayout>
+							</row>
+							<row id="rowislogin">
+								<hlayout>
+									<label>Status Login</label>
+								</hlayout>
+								<vlayout>
+									<radiogroup id="rgIslogin" selectedItem="@bind(vm.isuserlogin)">
+										<radio id="rbY" label="Online" value="1" />
+										<radio id="rbN" label="Offline" value="0" />
+									</radiogroup>
+								</vlayout>
+							</row>
+							<row id="rowlastlogin">
+								<hlayout>
+									<label value="${labels.user.lastlogin}" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbLastlog" cols="35" 
+										value="@bind(e.lastlogin)" />
+								</vlayout>
+							</row>
+							<row id="rowcreateby">
+								<hlayout>
+									<label value="${labels.user.createby}" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbCreator" cols="35" value="@bind(e.createdby)" />
+								</vlayout>
+							</row>
+							<row id="rowcreatetime">
+								<hlayout>
+									<label value="${labels.user.createdate}" />
+								</hlayout>
+								<vlayout>
+									<textbox id="tbCreatime" cols="35" value="@bind(e.createdtime)" />
+								</vlayout>
+							</row>
+						</rows>
+					</grid>
+				</div>
+				<div id="divFooter" class="card-footer" style="border: 0px; padding: 10px 0px 0px 0px; background-color: #ffffff; padding-right: 16px;" align="right">
+					<button id="btnCancel" label="Batal"
+						onClick="@command('doReset')" autodisable="self"
+						sclass="btn btn-default btn-sm" width="100px"
+						iconSclass="z-icon-times" />
+					<separator orient="vertical" />
+					<button id="btnSave" label="Simpan"
+						autodisable="self" sclass="btn btn-primary btn-sm" width="100px"
+						iconSclass="z-icon-save" onClick="@command('doSave')" />
+				</div>
+			</div>
+		<separator />
+	</window>
+</zk>
