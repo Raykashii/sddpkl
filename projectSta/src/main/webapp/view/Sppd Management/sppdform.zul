@@ -1,0 +1,37 @@
+<window title="Form Sppd" border="normal" width="400px" apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('com.projectSta.viewmodel.SppdFormVM')">
+    <grid>
+        <rows>
+            <row>
+            <label value="Employee :"/>
+                <combobox id="memployeefk" model="@bind(vm.employeeList)" selectedItem="@bind(vm.selectedEmployee)" autodrop="true">
+			    <template name="model">
+			        <comboitem label="@load(each.employeeName)" value="@load(each)" />
+			    </template>
+			</combobox>
+
+            </row>
+            <row>
+                <label value="Tanggal Berangkat:"/>
+                <datebox value="@bind(vm.mtletter.tgl_berangkat)" hflex="1"/>
+            </row>
+            <row>
+                <label value="Tanggal Pulang:"/>
+                <datebox value="@bind(vm.mtletter.tgl_pulang)" hflex="1"/>
+            </row>
+            <row>
+                <label value="Tujuan:"/>
+                <textbox value="@bind(vm.mtletter.tujuan)" hflex="1"/>
+            </row>
+            <row>
+                <label value="Keterangan:"/>
+                <textbox value="@bind(vm.mtletter.keterangan)" hflex="1"/>
+            </row>
+        </rows>
+    </grid>
+
+    <div style="margin-top:10px;">
+        <button label="Submit" onClick="@command('submit')"/>
+        <button label="Reset" onClick="@command('reset')"/>
+    </div>
+</window>
