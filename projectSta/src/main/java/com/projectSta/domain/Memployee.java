@@ -1,11 +1,20 @@
 package com.projectSta.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import org.hibernate.annotations.Type;
-
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import java.lang.Integer;
+
 
 @Entity
 @Table(name = "Memployee")
@@ -29,18 +38,19 @@ public class Memployee implements Serializable {
 	}
 	
 	
+	
 	@Column(length = 40)
 	@Type(type = "com.projectSta.utils.usertype.TrimUserType")
 	public String getNama() {
 		return nama;
 	}
+
 	public void setNama(String nama) {
 		this.nama = nama;
 	}
 	
 	
-	@Column(length = 40)
-	@Type(type = "com.projectSta.utils.usertype.TrimUserType")
+
 	public String getJabatan() {
 		return jabatan;
 	}
@@ -49,8 +59,7 @@ public class Memployee implements Serializable {
 	}
 	
 	
-	@Column(length = 40)
-	@Type(type = "com.projectSta.utils.usertype.TrimUserType")
+
 	public String getNo_telp() {
 		return no_telp;
 	}
@@ -59,9 +68,7 @@ public class Memployee implements Serializable {
 	}
 	
 	
-	
-	@Column(length = 100)
-	@Type(type = "com.projectSta.utils.usertype.TrimUserType")
+
 	public String getAlamat() {
 		return alamat;
 	}

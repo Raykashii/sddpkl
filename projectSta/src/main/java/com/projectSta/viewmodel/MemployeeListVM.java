@@ -23,6 +23,7 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
@@ -58,6 +59,9 @@ public class MemployeeListVM {
 	private Paging paging;
 	@Wire
 	private Div divPaging;
+	
+	@Wire
+	private Combobox cbEmployee;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@AfterCompose
@@ -115,7 +119,7 @@ public class MemployeeListVM {
 						Map<String, Object> map = new HashMap<String, Object>();
 						map.put("obj", data);
 						map.put("isDetail", "Y");
-						Window win = (Window) Executions.createComponents("/view/User Management/employeeform.zul",
+						Window win = (Window) Executions.createComponents("/view/Sppd Management/employeeform.zul",
 								null, map);
 						win.setWidth("55%");
 						win.setClosable(true);
@@ -141,7 +145,7 @@ public class MemployeeListVM {
 						Map<String, Object> map = new HashMap<String, Object>();
 						map.put("obj", data);
 						map.put("isEdit", "Y");
-						Window win = (Window) Executions.createComponents("/view/User Management/employeeform.zul",
+						Window win = (Window) Executions.createComponents("/view/Sppd Management/employeeform.zul",
 								null, map);
 						win.setWidth("55%");
 						win.setClosable(true);
@@ -188,7 +192,7 @@ public class MemployeeListVM {
 
 	@Command
 	public void doAddnew() {
-		Window win = (Window) Executions.createComponents("/view/User Management/kelasform.zul", null, null);
+		Window win = (Window) Executions.createComponents("/view/Sppd Management/employeeform.zul", null, null);
 		win.setWidth("55%");
 		win.doModal();
 		win.setClosable(true);
@@ -226,29 +230,21 @@ public class MemployeeListVM {
 	@Command
 	@NotifyChange("*")
 	public void doReset() {
-		nama = "";
-		jabatan = "";
-		doRefresh(pageStartNumber);
-		doSearch();
+	    nama = "";
+	    jabatan = "";
+	    if (cbEmployee != null) {
+	        cbEmployee.setValue(null); 
+	    }
+	    doRefresh(pageStartNumber);
+	    doSearch();
 	}
 
 	public void doDelete(Memployee kodekelas) {
 	    try {
 	        session = StoreHibernateUtil.openSession();
 	        transaction = session.beginTransaction();
-
-	        Long siswaCount = (Long) session.createQuery("SELECT count(s) FROM Tletter s WHERE s.memployeeFK = :employee")
-	                                        .setParameter("employee", kodekelas)
-	                                        .uniqueResult();
-
-	        if (siswaCount > 0) {
-	            Clients.evalJavaScript("swal.fire({"
-	                                    + "icon: 'error',"
-	                                    + "title: 'Tidak Bisa Dihapus',"
-	                                    + "text: 'Kelas ini memiliki " + siswaCount + " siswa yang terkait!',"
-	                                    + "})");
-	            transaction.rollback();
-	        } else {
+	       
+	        {
 	            new MemployeeDAO().delete(session, kodekelas);
 	            transaction.commit();
 	            Clients.evalJavaScript("swal.fire({"
