@@ -16,6 +16,9 @@
 	<h:meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	</h:meta>
+	<style>
+		
+	</style>
 	<script src="/assets/js/plugins.js"></script>
  	<zscript>
  		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
