@@ -230,11 +230,13 @@ public class MemployeeListVM {
 	@Command
 	@NotifyChange("*")
 	public void doReset() {
-		nama = "";
-		jabatan = "";
-		cbEmployee.setValue(null);
-		doRefresh(pageStartNumber);
-		doSearch();
+	    nama = "";
+	    jabatan = "";
+	    if (cbEmployee != null) {
+	        cbEmployee.setValue(null); 
+	    }
+	    doRefresh(pageStartNumber);
+	    doSearch();
 	}
 
 	public void doDelete(Memployee kodekelas) {
