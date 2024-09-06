@@ -45,9 +45,9 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.projectSta.dao.MemployeeDAO;
+import com.projectSta.dao.MkelasDAO;
 import com.projectSta.domain.Memployee;
-
-
+import com.projectSta.domain.Mkelas;
 import com.projectSta.utils.db.StoreHibernateUtil;
 
 public class MemployeeFormVM {
@@ -111,7 +111,15 @@ public class MemployeeFormVM {
 	}
 	
 	
-	
+	public ListModelList<Memployee> getEmployeemodel() {
+		ListModelList<Memployee> lm = null;
+		try {
+			lm = new ListModelList<Memployee>(new MemployeeDAO().listByFilter("0=0", "nama"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lm;
+	}
 	
 	
 	@SuppressWarnings({"rawtypes", "unchecked"})

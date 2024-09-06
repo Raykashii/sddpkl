@@ -23,6 +23,7 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
@@ -58,6 +59,9 @@ public class MemployeeListVM {
 	private Paging paging;
 	@Wire
 	private Div divPaging;
+	
+	@Wire
+	private Combobox cbEmployee;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@AfterCompose
@@ -228,6 +232,7 @@ public class MemployeeListVM {
 	public void doReset() {
 		nama = "";
 		jabatan = "";
+		cbEmployee.setValue(null);
 		doRefresh(pageStartNumber);
 		doSearch();
 	}

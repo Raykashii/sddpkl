@@ -1,16 +1,32 @@
-<window title="Form Sppd" border="normal" width="400px" apply="org.zkoss.bind.BindComposer"
-        viewModel="@id('vm') @init('com.projectSta.viewmodel.SppdFormVM')">
+<zk xmlns:w="client" xmlns:n="native">	
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+
+<window title="Form Sppd" 
+		border="normal" 
+		width="1300px" 
+		apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('com.projectSta.viewmodel.SppdFormVM')"
+        validationMessages="@id('vmsgs')"
+        id="winUserform">
+       <div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
     <grid>
         <rows>
-            <row>
-            <label value="Employee :"/>
-                <combobox id="memployeefk" model="@bind(vm.employeeList)" selectedItem="@bind(vm.selectedEmployee)" autodrop="true">
-			    <template name="model">
-			        <comboitem label="@load(each.employeeName)" value="@load(each)" />
-			    </template>
-			</combobox>
-
-            </row>
+			 <row>
+			    <label value="Employee :" />
+			    <combobox id="cbEmployeegroup" placeholder="Pilih Pegawai"
+			              model="@load(vm.employmodel)" cols="21"
+			              selectedItem="@bind(e.memployeefk)"
+			              readonly="true"
+			              autodrop="true">
+			        <template name="model" var="employee">
+			            <comboitem label="@load(employee.nama)" />
+			        </template>
+			    </combobox>
+			</row>
             <row>
                 <label value="Tanggal Berangkat:"/>
                 <datebox value="@bind(vm.mtletter.tgl_berangkat)" hflex="1"/>
@@ -34,4 +50,6 @@
         <button label="Submit" onClick="@command('submit')"/>
         <button label="Reset" onClick="@command('reset')"/>
     </div>
+    </div>
 </window>
+</zk>
