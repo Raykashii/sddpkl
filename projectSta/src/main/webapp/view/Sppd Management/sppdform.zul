@@ -1,55 +1,77 @@
-<zk xmlns:w="client" xmlns:n="native">	
-	<zscript>
-		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
-		if (oUser == null)
-			Executions.sendRedirect("/timeout.zul");
-	</zscript>
+<zk xmlns:w="client" xmlns:n="native">
+    <zscript>
+        com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+        if (oUser == null)
+            Executions.sendRedirect("/timeout.zul");
+    </zscript>
 
-<window title="Form Sppd" 
-		border="normal" 
-		width="1300px" 
-		apply="org.zkoss.bind.BindComposer"
-        viewModel="@id('vm') @init('com.projectSta.viewmodel.SppdFormVM')"
-        validationMessages="@id('vmsgs')"
-        id="winUserform">
-       <div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
-    <grid>
-        <rows>
-			 <row>
-			    <label value="Employee :" />
-			    <combobox id="cbEmployeegroup" placeholder="Pilih Pegawai"
-			              model="@load(vm.employmodel)" cols="21"
-			              selectedItem="@bind(e.memployeefk)"
-			              readonly="true"
-			              autodrop="true">
-			        <template name="model" var="employee">
-			            <comboitem label="@load(employee.nama)" />
-			        </template>
-			    </combobox>
-			</row>
-            <row>
-                <label value="Tanggal Berangkat:"/>
-                <datebox value="@bind(vm.mtletter.tgl_berangkat)" hflex="1"/>
-            </row>
-            <row>
-                <label value="Tanggal Pulang:"/>
-                <datebox value="@bind(vm.mtletter.tgl_pulang)" hflex="1"/>
-            </row>
-            <row>
-                <label value="Tujuan:"/>
-                <textbox value="@bind(vm.mtletter.tujuan)" hflex="1"/>
-            </row>
-            <row>
-                <label value="Keterangan:"/>
-                <textbox value="@bind(vm.mtletter.keterangan)" hflex="1"/>
-            </row>
-        </rows>
-    </grid>
+    <window title="Form Sppd"
+            border="normal"
+            width="1300px"
+            apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('com.projectSta.viewmodel.SppdFormVM')"
+            validationMessages="@id('vmsgs')"
+            id="winUserform">
+        <div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+            <grid>
+                <rows>
+                    <row>
+                        <label value="Employee :" />
+                        <combobox id="cbEmployeegroup" placeholder="Pilih Pegawai"
+                                  model="@load(vm.employmodel)" cols="21"
+                                  selectedItem="@bind(e.memployeefk)"
+                                  readonly="true"
+                                  autodrop="true">
+                            <template name="model" var="employee">
+                                <comboitem label="@load(employee.nama)" />
+                            </template>
+                        </combobox>
+                    </row>
+                    <row>
+                        <label value="Tanggal Berangkat:"/>
+                        <datebox id="tglBerangkat" value="@bind(vm.mtletter.tgl_berangkat)" hflex="1"/>
+                    </row>
+                    <row>
+                        <label value="Tanggal Pulang:"/>
+                        <datebox id="tglPulang" value="@bind(vm.mtletter.tgl_pulang)" hflex="1"/>
+                    </row>
+                    <row>
+                        <label value="Tujuan:"/>
+                        <textbox id="tujuan" value="@bind(vm.mtletter.tujuan)" hflex="1"/>
+                    </row>
+                    <row>
+                        <label value="Keterangan:"/>
+                        <textbox id="keterangan" value="@bind(vm.mtletter.keterangan)" hflex="1"/>
+                    </row>
+                </rows>
+            </grid>
 
-    <div style="margin-top:10px;">
-        <button label="Submit" onClick="@command('submit')"/>
-        <button label="Reset" onClick="@command('reset')"/>
-    </div>
-    </div>
-</window>
+            <div style="margin-top:10px;">
+                <button label="Submit" onClick="@command('submit')"/>
+                <button label="Reset" onClick="@command('reset')"/>
+            </div>
+        </div>
+    </window>
+    <script type="text/javascript">
+        function printData() {
+            var printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print</title></head><body>');
+
+            // Ambil data dari textbox
+            var tglBerangkat = document.getElementById('tglBerangkat').value;
+            var tglPulang = document.getElementById('tglPulang').value;
+            var tujuan = document.getElementById('tujuan').value;
+            var keterangan = document.getElementById('keterangan').value;
+
+            printWindow.document.write('<p>Tanggal Berangkat: ' + tglBerangkat + '</p>');
+            printWindow.document.write('<p>Tanggal Pulang: ' + tglPulang + '</p>');
+            printWindow.document.write('<p>Tujuan: ' + tujuan + '</p>');
+            printWindow.document.write('<p>Keterangan: ' + keterangan + '</p>');
+
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
+    </script>
 </zk>

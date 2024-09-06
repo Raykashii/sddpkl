@@ -24,11 +24,38 @@
 	</h:meta>
 	<script src="/assets/js/plugins.js"></script>
 	<style>
-		#fmlogin { background-color: white; border-radius: 20px;
-		padding-top: 40px; padding-bottom: 10px; }
-	</style>
+    /* Base style for the button */
+    button {
+        background-color: #EEDF7A;
+        color: white;
+        font-weight: bold; /* Bold font for the button */
+        transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    /* Hover effect for the button */
+    button:hover {
+        background-color: #A04747;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+    }
+
+    /* Card styling */
+    #fmlogin {
+        background-color: white;
+        border-radius: 20px;
+        padding-top: 40px;
+        padding-bottom: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow to the card */
+        font-weight: 500; /* Slightly bold text for the card */
+    }
+    
+    /* Additional styles for text */
+    .card-text {
+        font-weight: bold; /* Bold font for the text inside the card */
+    }
+</style>
+
 	<div id="bdlogin" class="container-fluid"
-		style="padding-right:0px; padding-left:0px; background-image: url('images/asset/bglogintimeout.png'); background-repeat: no-repeat; background-attachment: inherit;
+		style="padding-right:0px; padding-left:0px; background-image: url('images/asset/bgtm.png'); background-repeat: no-repeat; background-attachment: inherit;
 		background-position: center; background-size: cover;">
 		<div class="body-header sticky-md-top">
 			<div class="container-fluid border-1">
@@ -61,14 +88,12 @@
 						Silahkan login untuk menggunakan aplikasi
 						kembali.
 						<n:br />
-						<n:br />
-						<n:br />
+					
 
 
 					</n:p>
-					<n:a href="/projectSta/index.zul">
+					<n:a href="/statistikantasena/index.zul">
 						<button autodisable="self"
-							style="background-color: #0069ab !important; color:white"
 							class="btn btn-info btn-block my-4 rounded-pill"
 							label="Kembali ke Halaman Login"
 							tooltiptext="Kembali ke Halaman Login" />

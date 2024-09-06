@@ -20,10 +20,7 @@ import org.zkoss.zul.ListModelList;
 import com.projectSta.dao.MtletterDAO;
 import com.projectSta.domain.Mtletter;
 import com.projectSta.dao.MemployeeDAO;
-import com.projectSta.dao.MkelasDAO;
 import com.projectSta.domain.Memployee;
-import com.projectSta.domain.Mkelas;
-import com.projectSta.domain.Msiswa;
 import com.projectSta.utils.db.StoreHibernateUtil;
 
 public class SppdFormVM {
@@ -31,28 +28,24 @@ public class SppdFormVM {
     private Mtletter mtletter = new Mtletter(); // Inisialisasi objek untuk form
     private boolean isInsert = true; // Menandakan mode insert atau update
 
-    
-	@Wire
-	private Combobox cbEmployeegroup;
-		
-	private Mtletter obj;
-	
+    @Wire
+    private Combobox cbEmployeegroup;
 
-	
-    
+    private Mtletter obj;
+
     @AfterCompose
     public void afterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("obj") Mtletter obj) {
-		Selectors.wireComponents(view, this, false);
-		doReset();
+                             @ExecutionArgParam("obj") Mtletter obj) {
+        Selectors.wireComponents(view, this, false);
+        doReset();
 
-		if (obj != null) {
-			this.obj = obj;
-			isInsert = false;
-			cbEmployeegroup.setValue(obj.getMemployeefk().getNama());
-		}
+        if (obj != null) {
+            this.obj = obj;
+            isInsert = false;
+            cbEmployeegroup.setValue(obj.getMemployeefk().getNama());
+        }
     }
-    
+
     @Command
     @NotifyChange("mtletter")
     public void submit() {
@@ -75,40 +68,72 @@ public class SppdFormVM {
             Clients.showNotification("Data saved successfully", Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 3000);
             doReset(); // Bersihkan form setelah submit
 
+            // Trigger print function
+            Clients.evalJavaScript("printData();");
+
         } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
+            if (transaction != null && transaction.isActive()) {
+                try {
+                    transaction.rollback();
+                } catch (Exception rollbackException) {
+                    rollbackException.printStackTrace();
+                }
+            }
             e.printStackTrace();
             Clients.showNotification("Error: " + e.getMessage(), Clients.NOTIFICATION_TYPE_ERROR, null, "top_center", 3000);
         } finally {
-            if (session != null) session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
+
+
+
 
     @Command
     @NotifyChange("mtletter")
     public void reset() {
         doReset();
     }
-    
-	public ListModelList<Memployee> getEmploymodel() {
-		ListModelList<Memployee> lm = null;
-		try {
-			lm = new ListModelList<Memployee>(new MemployeeDAO().listByFilter("0=0", "nama"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lm;
-	}
+
+    public ListModelList<Memployee> getEmploymodel() {
+        ListModelList<Memployee> lm = null;
+        try {
+            lm = new ListModelList<Memployee>(new MemployeeDAO().listByFilter("0=0", "nama"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lm;
+    }
 
     public void doReset() {
         mtletter = new Mtletter(); // Mengosongkan semua field
         isInsert = true; // Kembali ke mode insert
-        
-     
-		obj = new Mtletter();
-		isInsert = true;
-		cbEmployeegroup.setValue(null);
-		    }
+        obj = new Mtletter();
+        cbEmployeegroup.setValue(null);
+    }
+
+    private boolean validateForm() {
+        if (mtletter.getTgl_berangkat() == null) {
+            Clients.showNotification("Tanggal Berangkat harus diisi", Clients.NOTIFICATION_TYPE_WARNING, null, "top_center", 3000);
+            return false;
+        }
+        if (mtletter.getTgl_pulang() == null) {
+            Clients.showNotification("Tanggal Pulang harus diisi", Clients.NOTIFICATION_TYPE_WARNING, null, "top_center", 3000);
+            return false;
+        }
+        if (mtletter.getTujuan() == null || mtletter.getTujuan().trim().isEmpty()) {
+            Clients.showNotification("Tujuan harus diisi", Clients.NOTIFICATION_TYPE_WARNING, null, "top_center", 3000);
+            return false;
+        }
+        if (mtletter.getKeterangan() == null || mtletter.getKeterangan().trim().isEmpty()) {
+            Clients.showNotification("Keterangan harus diisi", Clients.NOTIFICATION_TYPE_WARNING, null, "top_center", 3000);
+            return false;
+        }
+        return true;
+    }
+
     public Mtletter getMtletter() {
         return mtletter;
     }
@@ -117,21 +142,19 @@ public class SppdFormVM {
         this.mtletter = mtletter;
     }
 
-	public Combobox getCbEmployeegroup() {
-		return cbEmployeegroup;
-	}
+    public Combobox getCbEmployeegroup() {
+        return cbEmployeegroup;
+    }
 
-	public void setCbEmployeegroup(Combobox cbEmployeegroup) {
-		this.cbEmployeegroup = cbEmployeegroup;
-	}
+    public void setCbEmployeegroup(Combobox cbEmployeegroup) {
+        this.cbEmployeegroup = cbEmployeegroup;
+    }
 
-	public Mtletter getObj() {
-		return obj;
-	}
+    public Mtletter getObj() {
+        return obj;
+    }
 
-	public void setObj(Mtletter obj) {
-		this.obj = obj;
-	}
-    
-    
+    public void setObj(Mtletter obj) {
+        this.obj = obj;
+    }
 }
