@@ -1,5 +1,10 @@
 package com.projectSta.viewmodel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +31,7 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
@@ -37,6 +43,12 @@ import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 
 import com.projectSta.dao.MsiswaDAO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.projectSta.dao.MkelasDAO;
 import com.projectSta.domain.Msiswa;
 import com.projectSta.domain.Mkelas;
@@ -256,18 +268,36 @@ public class MsiswaListVM {
 		doSearch();
 	}
 	
-	 /*  @Command
-	    public void doExportToPDF() {
-	        try {
-	            List<Msiswa> siswaList = loadSiswaData(); // Method to load the data to be exported
-	            PdfExport pdfExport = new PdfExport();
-	            pdfExport.exportToPDF(siswaList, "C:/path-to-save/siswa_export.pdf"); // Specify the file path
+	
+		
+	@Command
+    public void exportToPDF() {
+        try {
+            List<Msiswa> siswaList = loadSiswaData(); // Method to load the data to be exported
+            PdfExport pdfExport = new PdfExport();
+            String filePath = "C:\\Users\\rasya\\Documents\\tespdf\\siswa_export.pdf"; // Specify the file path
 
-	            Clients.showNotification("PDF exported successfully!", "info", null, "middle_center", 2000);
-	        } catch (Exception e) {
-	            Clients.showNotification("Failed to export PDF: " + e.getMessage(), "error", null, "middle_center", 2000);
-	        }
-	    }*/
+            pdfExport.exportToPDF(siswaList, filePath);
+
+            // Notify the user
+            Clients.showNotification("PDF exported successfully!", "info", null, "middle_center", 2000);
+
+            // Optionally, open the file automatically
+            File pdfFile = new File(filePath);
+            if (pdfFile.exists()) {
+                Executions.getCurrent().sendRedirect(filePath);
+            }
+        } catch (Exception e) {
+            Clients.showNotification("Failed to export PDF: " + e.getMessage(), "error", null, "middle_center", 2000);
+        }
+    }
+
+    // Method to load siswa data
+    private List<Msiswa> loadSiswaData() {
+        // Implement the logic to load the list of Msiswa objects from the database or other sources
+        return null; // Replace with actual data retrieval code
+    }
+
 
 	public void doDelete(Msiswa user) {
 		try {

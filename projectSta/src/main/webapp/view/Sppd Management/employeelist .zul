@@ -9,23 +9,19 @@
 	</zscript>
 	
 	<div class="card"
-		viewModel="@id('vm')@init('com.projectSta.viewmodel.MsiswaListVM')">
+		viewModel="@id('vm')@init('com.projectSta.viewmodel.MemployeeListVM')">
 		<div class="card-header" style="background-color: white;">
 			<n:h5>
 				<n:i class="fa fa-list"></n:i>
-				${labels.siswa.list}
+				${labels.kelas.list}
 			</n:h5>
 		</div>
 		<div class="card-body" style="padding-top: 0px;">
 			<div class="row">
 				<div class="col-md-12" align="right">
-					<button autodisable="self" label=" Tambah Siswa"
+					<button autodisable="self" label=" Tambah Pegawai"
 						sclass="btn btn-primary btn-sm" iconSclass="z-icon-plus"
 						onClick="@command('doAddnew')">
-					</button>
-					<button autodisable="self" label=" Export to PDF"
-						sclass="btn btn-danger btn-sm" iconSclass="z-icon-file-pdf"
-						onClick="@command('exportToPDF')">
 					</button>
 				</div>
 			</div>
@@ -39,37 +35,14 @@
 					</columns>
 					<rows>
 						<row>
-							<label value="${labels.siswa.nisn}" />
-							<textbox value="@bind(vm.nisn)" cols="25"
-								maxlength="20" />
+							<label value="Nama Pegawai" />
+							<textbox value="@bind(vm.nama)"
+								cols="25" maxlength="20" />
 						</row>
 						<row>
-							<label value="${labels.siswa.nama}" />
-							<textbox value="@bind(vm.namasiswa)"
+							<label value="Jabatan" />
+							<textbox value="@bind(vm.jabatan)"
 								cols="25" maxlength="40" />
-						</row>
-					<row>
-					    <label value="Jenis Kelamin" />
-					    <combobox id="tbKelamin" placeholder="Pilih Jenis Kelamin"
-					              model="@load(vm.jenisKelaminModel)" cols="21"
-					              selectedItem="@bind(vm.jeniskelamin)">
-					        <template name="model" var="gender">
-					            <comboitem label="@load(gender)" />
-					        </template>
-					    </combobox>
-					</row>
-						
-						<row>
-							<label value="Kelas" />
-							<combobox id="cbUsergrup" placeholder="Pilih Kelas"
-								model="@load(vm.kelasmodel)" cols="21"
-								selectedItem="@bind(vm.mkelas)">
-								<template name="model"
-									var="mkelas">
-									<comboitem
-										label="@load(mkelas.namakelas)" />
-								</template>
-							</combobox>
 						</row>
 					</rows>
 					<foot>
@@ -79,7 +52,7 @@
 								label=" ${labels.common.reset}" width="100px"
 								class="btn btn-primary" iconSclass="z-icon-repeat"
 								onClick="@command('doReset')" />
-								<separator orient="vertical" />
+							<separator orient="vertical" />
 							<button autodisable="self"
 								label=" ${labels.common.search}" width="100px"
 								class="btn btn-warning" iconSclass="z-icon-search"
@@ -94,7 +67,7 @@
 					<paging id="paging" autohide="true" />
 				</div>
 				<div class="col-md-2" align="right" style="position: relative; top: 20px;">
-					<label value="Total Data :" />
+					<label value="Total Pegawai :" />
 					<label value="@load(vm.pageTotalSize)"
 						style="font-weight: bold" />
 				</div>
@@ -102,28 +75,32 @@
 			<div style="overflow:auto">
 				<timer id="timer" />
 				<grid id="grid"
-					emptyMessage="${labels.common.emptymsg}" >
+					emptyMessage="${labels.common.emptymsg}">
 					<columns>
+							
 						<column label="${labels.common.no}" width="50px"
 							align="right"
 							class="header-column" />
-						<column label="${labels.siswa.nisn}"
-							width="100px" align="center" sort="auto(nisn)"
+						<column
+							label="${labels.pegawai.nama}" width="180px"
+							sort="auto(nama)"
 							class="header-column" />
-						<column label="${labels.siswa.nama}"
-							width="300px"
-							sort="auto(namasiswa)"
+						<column
+							label="${labels.pegawai.jabatan}"
+							sort="auto(jabatan)"
 							class="header-column" />
-						<column label="${labels.siswa.kelamin}"	
-							width="100px"
-							sort="auto(jeniskelamin)"
+						<column
+							label="${labels.pegawai.no}"
+							sort="auto(no_telp)"
 							class="header-column" />
-						<column label="Kelas"
-							sort="auto(mkelasfk.namakelas)" width="200px"
+						<column
+							label="${labels.pegawai.alamat}"
+							sort="auto(alamat)"
 							class="header-column" />
 						<column label="${labels.common.action}"
-							 align="center"
+							width="250px" align="center"
 							class="header-column" />
+							
 					</columns>
 				</grid>
 			</div>
