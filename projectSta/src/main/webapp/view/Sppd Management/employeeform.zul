@@ -1,0 +1,77 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+
+<zk xmlns:w="client" xmlns:n="native" xmlns:x="xhtml">
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+	
+	<window viewModel="@id('vm')@init('com.projectSta.viewmodel.MemployeeFormVM')" validationMessages="@id('vmsgs')" id="winUsergroupform" contentStyle="border-radius: 7px;">
+		<caption style="padding: 0px; color: #f2f2f2;" iconSclass="fa fa-lg fa-cogs" label="${labels.pegawai.form}" />
+		<div class="card">
+			<div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+				<grid style="border:none !important">
+					<columns>
+						<column width="35%" />
+						<column width="65%" />
+					</columns>					
+					<rows>
+						<row>
+							<hlayout>
+								<label value="${labels.pegawai.nama}" />
+								<label style="color: red" value="*" />
+							</hlayout>
+							<vlayout>
+								<textbox id="tbNama" value="@bind(e.nama)" cols="33" maxlength="20" />
+								<label value="@load(vmsgs['nama'])" style="color:red" />
+							</vlayout>
+						</row>
+						<row>
+							<hlayout>
+								<label value="${labels.pegawai.jabatan}" />
+								<label style="color:red">*</label>
+							</hlayout>
+							<vlayout>
+								<textbox id="tbJabatan" value="@bind(e.jabatan)" cols="33" maxlength="40" />
+								<label value="@load(vmsgs['jabatan'])" style="color:red" />
+							</vlayout>
+						</row>
+						<row>
+							<hlayout>
+								<label value="${labels.pegawai.no}" />
+								<label style="color:red">*</label>
+							</hlayout>
+							<vlayout>
+								<textbox id="tbNotelp" value="@bind(e.no_telp)" cols="33" maxlength="40" />
+								<label value="@load(vmsgs['no_telp'])" style="color:red" />
+							</vlayout>
+						</row>
+						<row>
+							<hlayout>
+								<label value="${labels.pegawai.alamat}" />
+								<label style="color:red">*</label>
+							</hlayout>
+							<vlayout>
+								<textbox id="tbAlamat" value="@bind(e.alamat)" cols="33" maxlength="40" />
+								<label value="@load(vmsgs['alamat'])" style="color:red" />
+							</vlayout>
+						</row>
+					</rows>
+				</grid>
+				<separator />
+				<div id="divFooter" class="card-footer" style="border: 0px; padding: 10px 0px 0px 0px; background-color: #ffffff; padding-right: 16px;" align="right">
+					<button id="btnCancel" label="Batal"
+						onClick="@command('doReset')" autodisable="self"
+						sclass="btn btn-default btn-sm" width="100px"
+						iconSclass="z-icon-times" />
+					<separator orient="vertical" />
+					<button id="btnSave" label="Simpan"
+						autodisable="self" sclass="btn btn-primary btn-sm" width="100px"
+						iconSclass="z-icon-save" onClick="@command('doSave')" />
+				</div>
+			</div>
+		</div>
+	</window>
+</zk>
