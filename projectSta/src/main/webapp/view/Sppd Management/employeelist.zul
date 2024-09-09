@@ -13,7 +13,7 @@
 		<div class="card-header" style="background-color: white;">
 			<n:h5>
 				<n:i class="fa fa-list"></n:i>
-				${labels.kelas.list}
+				${labels.pegawai.list}
 			</n:h5>
 		</div>
 		<div class="card-body" style="padding-top: 0px;">

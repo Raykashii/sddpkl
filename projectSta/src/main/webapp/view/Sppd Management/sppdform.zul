@@ -52,26 +52,13 @@
             </div>
         </div>
     </window>
-    <script type="text/javascript">
-        function printData() {
-            var printWindow = window.open('', '', 'height=600,width=800');
-            printWindow.document.write('<html><head><title>Print</title></head><body>');
-
-            // Ambil data dari textbox
-            var tglBerangkat = document.getElementById('tglBerangkat').value;
-            var tglPulang = document.getElementById('tglPulang').value;
-            var tujuan = document.getElementById('tujuan').value;
-            var keterangan = document.getElementById('keterangan').value;
-
-            printWindow.document.write('<p>Tanggal Berangkat: ' + tglBerangkat + '</p>');
-            printWindow.document.write('<p>Tanggal Pulang: ' + tglPulang + '</p>');
-            printWindow.document.write('<p>Tujuan: ' + tujuan + '</p>');
-            printWindow.document.write('<p>Keterangan: ' + keterangan + '</p>');
-
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.focus();
-            printWindow.print();
-        }
-    </script>
+	<script>
+    function showPrintPreview(printContent) {
+        var newWindow = window.open('', '', 'width=800,height=600');
+        newWindow.document.write(printContent);
+        newWindow.document.close(); // Ensure the content is loaded
+        newWindow.focus(); // Set focus to the new window
+        newWindow.print(); // Trigger the print dialog
+    }
+</script>
 </zk>

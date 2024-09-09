@@ -49,6 +49,10 @@ public class SppdFormVM {
     @Command
     @NotifyChange("mtletter")
     public void submit() {
+        if (!validateForm()) {
+            return; // If validation fails, don't proceed
+        }
+
         Session session = null;
         Transaction transaction = null;
         try {
@@ -56,20 +60,26 @@ public class SppdFormVM {
             transaction = session.beginTransaction();
             MtletterDAO mtletterDAO = new MtletterDAO();
 
-            if (isInsert) {
+            // Assign selected employee from combobox to mtletter
+            Memployee selectedEmployee = cbEmployeegroup.getSelectedItem().getValue();
+            mtletter.setMemployeefk(selectedEmployee); // Ensure MemployeeFK is set
+
+            if (isInsert && mtletter.getTgl_berangkat() == null) {
                 mtletter.setTgl_berangkat(new Date());
             }
 
-            // Simpan atau perbarui data
+            // Save or update data
             mtletterDAO.save(session, mtletter);
             transaction.commit();
 
-            // Notifikasi berhasil
+            // Notification for success
             Clients.showNotification("Data saved successfully", Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 3000);
-            doReset(); // Bersihkan form setelah submit
+            doReset(); // Reset form after successful submit
 
-            // Trigger print function
-            Clients.evalJavaScript("printData();");
+            // Trigger print function with data
+            String printContent = generatePrintContent(mtletter); // Generate printable content
+            printContent = printContent.replace("'", "\\'"); // Escape single quotes for JavaScript
+            Clients.evalJavaScript("showPrintPreview('" + printContent + "');");
 
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
@@ -88,6 +98,19 @@ public class SppdFormVM {
         }
     }
 
+
+    private String generatePrintContent(Mtletter mtletter) {
+        StringBuilder content = new StringBuilder();
+        content.append("<html><head><title>Print Preview</title></head><body>");
+        content.append("<h1 style='text-align:center;'>SPPD Letter</h1>");
+        content.append("<p><strong>Tanggal Berangkat:</strong> " + mtletter.getTgl_berangkat() + "</p>");
+        content.append("<p><strong>Tanggal Pulang:</strong> " + mtletter.getTgl_pulang() + "</p>");
+        content.append("<p><strong>Tujuan:</strong> " + mtletter.getTujuan() + "</p>");
+        content.append("<p><strong>Keterangan:</strong> " + mtletter.getKeterangan() + "</p>");
+        content.append("</body></html>");
+        
+        return content.toString().replace("'", "\\'"); // Escape single quotes for JavaScript
+    }
 
 
 
