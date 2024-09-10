@@ -20,37 +20,43 @@
 			<div class="row">
 			</div>
 			<groupbox id="gbSearch" open="false">
-				<caption label="${labels.common.searching}" 
-					image="/images/search.png" />
-				<grid>
-					<columns>
-						<column width="170px" />
-						<column />
-					</columns>
-					<rows>
-						<row>
-							<label value="${labels.pegawai.nama}" />
-							<textbox value="@bind(vm.nama)" cols="25"
-								maxlength="20" />
-						</row>		
-						
-					</rows>
-					<foot>
-						<footer />
-						<footer align="right">
-							<button autodisable="self"
-								label=" ${labels.common.reset}" width="100px"
-								class="btn btn-primary" iconSclass="z-icon-repeat"
-								onClick="@command('doReset')" />
-								<separator orient="vertical" />
-							<button autodisable="self"
-								label=" ${labels.common.search}" width="100px"
-								class="btn btn-warning" iconSclass="z-icon-search"
-								onClick="@command('doSearch')" />
-						</footer>
-					</foot>
-				</grid>
-			</groupbox>
+    <caption label="${labels.common.searching}" image="/images/search.png" />
+    <grid>
+        <columns>
+            <column width="170px" />
+            <column />
+        </columns>
+        <rows>
+            <row>
+                <label value="${labels.pegawai.nama}" />
+                <textbox value="@bind(vm.nama)" cols="25" maxlength="20" />
+            </row>
+            <row>
+                <label value="Tanggal Berangkat" />
+                <datebox value="@bind(vm.tgl_berangkat)" format="yyyy-MM-dd" />
+            </row>
+            <row>
+                <label value="Tanggal Pulang" />
+                <datebox value="@bind(vm.tgl_pulang)" format="yyyy-MM-dd" />
+            </row>
+        </rows>
+        <foot>
+            <footer />
+            <footer align="right">
+                <button autodisable="self"
+                    label="${labels.common.reset}" width="100px"
+                    class="btn btn-primary" iconSclass="z-icon-repeat"
+                    onClick="@command('doReset')" />
+                <separator orient="vertical" />
+                <button autodisable="self"
+                    label="${labels.common.search}" width="100px"
+                    class="btn btn-warning" iconSclass="z-icon-search"
+                    onClick="@command('doSearch')" />
+            </footer>
+        </foot>
+    </grid>
+</groupbox>
+
 			<separator/>
 			<div id="divPaging" class="row" style="background-color: #f2f2f2; margin: 0px 1px 0px 1px;" >
 				<div class="col-md-10">
@@ -70,8 +76,9 @@
 						<column label="${labels.common.no}" width="50px"
 							align="right"
 							class="header-column" />
-						<column label="${labels.pegawai.nama}"
-							width="150px" align="center" sort="auto(nama)"
+						<column label="Nama pegawai"
+							width="150px" 
+							sort="auto(memployeefk.nama)"
 							class="header-column" />
 						<column label="${labels.sppd.berangkat}"
 							width="165px"

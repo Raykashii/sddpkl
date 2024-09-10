@@ -1,15 +1,22 @@
 package com.projectSta.viewmodel;
 
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.Date;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -43,7 +50,6 @@ import org.zkoss.zul.RowRenderer;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.event.PagingEvent;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 import com.projectSta.dao.MemployeeDAO;
@@ -82,12 +88,8 @@ public class SppdListVM {
 	private Grid grid;
 	@Wire
 	private Paging paging;
-	
-	@Wire
-	private String jeniskelamin;
 
-	@Wire
-	private Combobox cbUsergrup;
+
 	@Wire
 	private Div divPaging;
 	
@@ -216,10 +218,29 @@ public class SppdListVM {
 								});
 					}
 				});
+				
+				Button btnPrint = new Button("Print");
+				btnPrint.setStyle("margin: 3px; padding: 10px 20px; font-size: 16px; width: 100px;");
+				btnPrint.setSclass("btn btn-primary btn-lg-active");
+				btnPrint.setAutodisable("self");
+				btnPrint.setTooltiptext("Print");
+				btnPrint.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("obj", data);
+						map.put("isPrint", "Y");
+						createPrintContent(data);
+						doReset();
+					}
+				});
+				
+
 
 				Div div = new Div();
 				div.appendChild(btnDetail);
 				div.appendChild(btnEdit);
+				div.appendChild(btnPrint);
 				div.appendChild(btnDelete);
 
 				row.getChildren().add(div);
@@ -227,6 +248,50 @@ public class SppdListVM {
 		});
 	}
 
+	
+	private void createPrintContent(Mtletter data) {
+	    PrinterJob job = PrinterJob.getPrinterJob(); 
+	    job.setPrintable(new Printable() {
+	        @Override
+	        public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
+	            if (page > 0) {
+	                return NO_SUCH_PAGE;
+	            }
+
+	            Graphics2D g2d = (Graphics2D) g;
+	            g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+	            // Set font style and size
+	            Font font = new Font("Century", Font.PLAIN, 18);
+	            g2d.setFont(font);
+	            int y = 100;
+	            int cellHeight = 60;
+
+	            g2d.drawString("Nama pegawai: " + data.getMemployeefk().getNama(), 100, y);
+	            y += cellHeight;
+	            g2d.drawString("Tanggal berangkat: " + data.getTgl_berangkat(), 100, y);
+	            y += cellHeight;
+	            g2d.drawString("Tanggal Pulang: " + data.getTgl_pulang(), 100, y);
+	            y += cellHeight;
+	            g2d.drawString("Tujuan: " + data.getTujuan(), 100, y);
+	            y += cellHeight;
+	            g2d.drawString("Keterangan: " + data.getKeterangan(), 100, y);
+	            y += cellHeight;
+
+	            return PAGE_EXISTS;
+	        }
+	    });
+
+	    // Show the print dialog
+	    boolean doPrint = job.printDialog();
+	    if (doPrint) {
+	        try {
+	            job.print(); // Trigger the actual print
+	        } catch (PrinterException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	}
 
 	@Command
 	@NotifyChange("*")
@@ -234,6 +299,16 @@ public class SppdListVM {
 		if (nama != null) {
 			filter += " and MemployeeFK = " + nama.getMemployeepk();
 		}
+		
+		// Filter by Tanggal Berangkat
+        if (tgl_berangkat != null) {
+            filter += " and tgl_berangkat >= '" + new java.sql.Date(tgl_berangkat.getTime()) + "'";
+        }
+
+        // Filter by Tanggal Pulang
+        if (tgl_pulang != null) {
+            filter += " and tgl_pulang <= '" + new java.sql.Date(tgl_pulang.getTime()) + "'";
+        }
 		needsPageUpdate = true;
 		paging.setActivePage(0);
 		pageStartNumber = 0;
@@ -244,12 +319,32 @@ public class SppdListVM {
 	@NotifyChange("*")
 	public void doReset() {
 		nama = null;
+		tgl_berangkat = null;
+		tgl_pulang = null;
 		doRefresh(pageStartNumber);
 		doSearch();
 	}
 	
 	
 		
+	
+
+	@Command
+	public void doAddnew() {
+		Window win = (Window) Executions.createComponents("/view/User Management/sppdform.zul", null, null);
+		win.setWidth("55%");
+		win.doModal();
+		win.setClosable(true);
+		win.addEventListener(Events.ON_CLOSE, new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				needsPageUpdate = true;
+				doReset();
+				BindUtils.postNotifyChange(null, null, SppdListVM.this, "*");
+			}
+		});
+	}
 	/*@Command
     public void exportToPDF() {
         try {
@@ -347,9 +442,6 @@ public class SppdListVM {
 		this.nama = nama;
 	}
 
-	public String getJeniskelamin() {
-		return jeniskelamin;
-	}
 
 
 	public Date getTgl_berangkat() {
