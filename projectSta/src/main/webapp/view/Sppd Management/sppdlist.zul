@@ -1,0 +1,100 @@
+<?page title="${desktop.webApp.appName}" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/app_icon.ico" ?>
+
+<zk xmlns:w="client" xmlns:n="native">
+	<zscript>
+		com.projectSta.domain.Muser oUser = (com.projectSta.domain.Muser) session.getAttribute("oUser");
+		if (oUser == null)
+			Executions.sendRedirect("/timeout.zul");
+	</zscript>
+	
+	<div class="card"
+		viewModel="@id('vm')@init('com.projectSta.viewmodel.SppdListVM')">
+		<div class="card-header" style="background-color: white;">
+			<n:h5>
+				<n:i class="fa fa-list"></n:i>
+				${labels.sppd.list}
+			</n:h5>
+		</div>
+		<div class="card-body" style="padding-top: 0px;">
+			<div class="row">
+			</div>
+			<groupbox id="gbSearch" open="false">
+				<caption label="${labels.common.searching}" 
+					image="/images/search.png" />
+				<grid>
+					<columns>
+						<column width="170px" />
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="${labels.pegawai.nama}" />
+							<textbox value="@bind(vm.nama)" cols="25"
+								maxlength="20" />
+						</row>		
+						
+					</rows>
+					<foot>
+						<footer />
+						<footer align="right">
+							<button autodisable="self"
+								label=" ${labels.common.reset}" width="100px"
+								class="btn btn-primary" iconSclass="z-icon-repeat"
+								onClick="@command('doReset')" />
+								<separator orient="vertical" />
+							<button autodisable="self"
+								label=" ${labels.common.search}" width="100px"
+								class="btn btn-warning" iconSclass="z-icon-search"
+								onClick="@command('doSearch')" />
+						</footer>
+					</foot>
+				</grid>
+			</groupbox>
+			<separator/>
+			<div id="divPaging" class="row" style="background-color: #f2f2f2; margin: 0px 1px 0px 1px;" >
+				<div class="col-md-10">
+					<paging id="paging" autohide="true" />
+				</div>
+				<div class="col-md-2" align="right" style="position: relative; top: 20px;">
+					<label value="Total Data :" />
+					<label value="@load(vm.pageTotalSize)"
+						style="font-weight: bold" />
+				</div>
+			</div>
+			<div style="overflow:auto">
+				<timer id="timer" />
+				<grid id="grid"
+					emptyMessage="${labels.common.emptymsg}" >
+					<columns>
+						<column label="${labels.common.no}" width="50px"
+							align="right"
+							class="header-column" />
+						<column label="${labels.pegawai.nama}"
+							width="150px" align="center" sort="auto(nama)"
+							class="header-column" />
+						<column label="${labels.sppd.berangkat}"
+							width="165px"
+							sort="auto(tgl_berangkat)"
+							class="header-column" />
+						<column label="${labels.sppd.pulang}"	
+							width="165px"
+							sort="auto(tgl_pulang)"
+							class="header-column" />
+						<column label="${labels.sppd.tujuan}"	
+							width="100px"
+							sort="auto(tujuan)"
+							class="header-column" />
+						<column label="${labels.sppd.ket}"	
+							width="250px"
+							sort="auto(keterangan)"
+							class="header-column" />
+						<column label="${labels.common.action}"
+							 align="center"
+							class="header-column" />
+					</columns>
+				</grid>
+			</div>
+		</div>
+	</div>
+</zk>

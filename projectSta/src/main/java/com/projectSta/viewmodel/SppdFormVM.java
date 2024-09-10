@@ -60,9 +60,11 @@ public class SppdFormVM {
             transaction = session.beginTransaction();
             MtletterDAO mtletterDAO = new MtletterDAO();
 
-            // Assign selected employee from combobox to mtletter
-            Memployee selectedEmployee = cbEmployeegroup.getSelectedItem().getValue();
-            mtletter.setMemployeefk(selectedEmployee); // Ensure MemployeeFK is set
+            // Since data binding is corrected, mtletter.memployeefk should be set
+            if (mtletter.getMemployeefk() == null) {
+                Memployee selectedEmployee = cbEmployeegroup.getSelectedItem().getValue();
+                mtletter.setMemployeefk(selectedEmployee); // Ensure MemployeeFK is set
+            }
 
             if (isInsert && mtletter.getTgl_berangkat() == null) {
                 mtletter.setTgl_berangkat(new Date());
@@ -72,14 +74,20 @@ public class SppdFormVM {
             mtletterDAO.save(session, mtletter);
             transaction.commit();
 
-            // Notification for success
-            Clients.showNotification("Data saved successfully", Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 3000);
-            doReset(); // Reset form after successful submit
-
-            // Trigger print function with data
+            // Generate print content before resetting mtletter
             String printContent = generatePrintContent(mtletter); // Generate printable content
             printContent = printContent.replace("'", "\\'"); // Escape single quotes for JavaScript
-            Clients.evalJavaScript("showPrintPreview('" + printContent + "');");
+            String jsScript = String.format("showPrintPreview('%s');", printContent);
+            System.out.println("JavaScript to execute: " + jsScript); // For debugging
+
+            // Now reset the form
+            doReset(); // Reset form after successful submit
+
+            // Notification for success
+            Clients.showNotification("Data saved successfully", Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 3000);
+
+            // Trigger print function with data
+            Clients.evalJavaScript(jsScript);
 
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
@@ -99,6 +107,8 @@ public class SppdFormVM {
     }
 
 
+
+
     private String generatePrintContent(Mtletter mtletter) {
         StringBuilder content = new StringBuilder();
         content.append("<html><head><title>Print Preview</title></head><body>");
@@ -108,9 +118,11 @@ public class SppdFormVM {
         content.append("<p><strong>Tujuan:</strong> " + mtletter.getTujuan() + "</p>");
         content.append("<p><strong>Keterangan:</strong> " + mtletter.getKeterangan() + "</p>");
         content.append("</body></html>");
-        
+
         return content.toString().replace("'", "\\'"); // Escape single quotes for JavaScript
     }
+
+ 
 
 
 

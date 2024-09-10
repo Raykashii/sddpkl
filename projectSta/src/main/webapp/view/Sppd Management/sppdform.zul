@@ -12,18 +12,18 @@
             viewModel="@id('vm') @init('com.projectSta.viewmodel.SppdFormVM')"
             validationMessages="@id('vmsgs')"
             id="winUserform">
-        <div id="divBody" class="card-body" style="padding:0px;" form="@id('e') @load(vm.obj) @save(vm.obj, before='doSave') @validator(vm.validator)">
+        <div id="divBody" class="card-body" style="padding:0px;">
             <grid>
                 <rows>
                     <row>
                         <label value="Employee :" />
                         <combobox id="cbEmployeegroup" placeholder="Pilih Pegawai"
                                   model="@load(vm.employmodel)" cols="21"
-                                  selectedItem="@bind(e.memployeefk)"
+                                  selectedItem="@bind(vm.mtletter.memployeefk)"
                                   readonly="true"
                                   autodrop="true">
                             <template name="model" var="employee">
-                                <comboitem label="@load(employee.nama)" />
+                                <comboitem label="@load(employee.nama)" value="@load(employee)" />
                             </template>
                         </combobox>
                     </row>
@@ -52,13 +52,13 @@
             </div>
         </div>
     </window>
-	<script>
-    function showPrintPreview(printContent) {
-        var newWindow = window.open('', '', 'width=800,height=600');
-        newWindow.document.write(printContent);
-        newWindow.document.close(); // Ensure the content is loaded
-        newWindow.focus(); // Set focus to the new window
-        newWindow.print(); // Trigger the print dialog
-    }
-</script>
+    <script>
+        function showPrintPreview(printContent) {
+            var newWindow = window.open('', '', 'width=800,height=600');
+            newWindow.document.write(printContent);
+            newWindow.document.close(); // Ensure the content is loaded
+            newWindow.focus(); // Set focus to the new window
+            newWindow.print(); // Trigger the print dialog
+        }
+    </script>
 </zk>
