@@ -28,9 +28,19 @@
         </columns>
         <rows>
             <row>
-                <label value="${labels.pegawai.nama}" />
-                <textbox value="@bind(vm.nama)" cols="25" maxlength="20" />
-            </row>
+    <label value="Employee" />
+    <combobox id="cbEmployee" placeholder="Pilih Employee"
+        model="@load(vm.kelasmodel)" cols="21"
+        selectedItem="@bind(vm.nama)">
+        <template name="model"
+            var="mkelas">
+            <comboitem
+                label="@load(mkelas.nama)" />
+        </template>
+    </combobox>
+</row>
+
+
             <row>
                 <label value="Tanggal Berangkat" />
                 <datebox value="@bind(vm.tgl_berangkat)" format="yyyy-MM-dd" />

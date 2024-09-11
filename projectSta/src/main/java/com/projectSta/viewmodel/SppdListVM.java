@@ -25,6 +25,7 @@ import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
@@ -83,6 +84,11 @@ public class SppdListVM {
 	private Date tgl_berangkat;
 	private Date tgl_pulang;
 	private String tujuan;
+	
+	
+	@Wire
+	private Combobox cbEmployee;
+	
 
 	@Wire
 	private Grid grid;
@@ -296,34 +302,46 @@ public class SppdListVM {
 	@Command
 	@NotifyChange("*")
 	public void doSearch() {
-		if (nama != null) {
-			filter += " and MemployeeFK = " + nama.getMemployeepk();
+	    // Initialize filter to avoid null issues
+	    filter = "1=1";  // Start with a neutral condition to simplify appending "and"
+	    
+	    // Filter by employee (if `nama` is not null)
+	    if (nama != null) {
+	        filter += " and MemployeeFK = " + nama.getMemployeepk();
+	    }
+	    
+	    // Filter by Tanggal Berangkat (if `tgl_berangkat` is not null)
+	    if (tgl_berangkat != null) {
+	        filter += " and tgl_berangkat >= '" + new java.sql.Date(tgl_berangkat.getTime()) + "'";
+	    }
+	    
+	    // Filter by Tanggal Pulang (if `tgl_pulang` is not null)
+	    if (tgl_pulang != null) {
+	        filter += " and tgl_pulang <= '" + new java.sql.Date(tgl_pulang.getTime()) + "'";
+	    }
+
+	    // Force page update and reset paging
+	    needsPageUpdate = true;
+	    paging.setActivePage(0);
+	    pageStartNumber = 0;
+
+	    // Call doRefresh to apply the new filter and refresh the grid
+	    doRefresh(pageStartNumber);
+	}
+
+
+	
+		@Command
+		@NotifyChange("*")
+		public void doReset() {
+			nama = null;
+			tgl_berangkat = null;
+			tgl_pulang = null;
+			filter = "";
+			cbEmployee.setValue(null);
+			doRefresh(pageStartNumber);
+			doSearch();
 		}
-		
-		// Filter by Tanggal Berangkat
-        if (tgl_berangkat != null) {
-            filter += " and tgl_berangkat >= '" + new java.sql.Date(tgl_berangkat.getTime()) + "'";
-        }
-
-        // Filter by Tanggal Pulang
-        if (tgl_pulang != null) {
-            filter += " and tgl_pulang <= '" + new java.sql.Date(tgl_pulang.getTime()) + "'";
-        }
-		needsPageUpdate = true;
-		paging.setActivePage(0);
-		pageStartNumber = 0;
-		doRefresh(pageStartNumber);
-	}
-
-	@Command
-	@NotifyChange("*")
-	public void doReset() {
-		nama = null;
-		tgl_berangkat = null;
-		tgl_pulang = null;
-		doRefresh(pageStartNumber);
-		doSearch();
-	}
 	
 	
 		
@@ -345,34 +363,6 @@ public class SppdListVM {
 			}
 		});
 	}
-	/*@Command
-    public void exportToPDF() {
-        try {
-            List<Memployee> siswaList = loadSiswaData(); // Method to load the data to be exported
-            PdfExport pdfExport = new PdfExport();
-            String filePath = "C:\\Users\\rasya\\Documents\\tespdf\\siswa_export.pdf"; // Specify the file path
-
-            pdfExport.exportToPDF(siswaList, filePath);
-
-            // Notify the user
-            Clients.showNotification("PDF exported successfully!", "info", null, "middle_center", 2000);
-
-            // Optionally, open the file automatically
-            File pdfFile = new File(filePath);
-            if (pdfFile.exists()) {
-                Executions.getCurrent().sendRedirect(filePath);
-            }
-        } catch (Exception e) {
-            Clients.showNotification("Failed to export PDF: " + e.getMessage(), "error", null, "middle_center", 2000);
-        }
-    }
-
-    // Method to load siswa data
-    private List<Msiswa> loadSiswaData() {
-        // Implement the logic to load the list of Msiswa objects from the database or other sources
-        return null; // Replace with actual data retrieval code
-    }*/
-
 
 	public void doDelete(Mtletter user) {
 		try {
@@ -437,7 +427,7 @@ public class SppdListVM {
 	public Memployee getNama() {
 		return nama;
 	}
-
+ 
 	public void setNama(Memployee nama) {
 		this.nama = nama;
 	}
@@ -472,6 +462,8 @@ public class SppdListVM {
 	public void setTujuan(String tujuan) {
 		this.tujuan = tujuan;
 	}
+
+
 
 
 	
