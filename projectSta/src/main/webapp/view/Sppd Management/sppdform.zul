@@ -29,27 +29,33 @@
                     </row>
                     <row>
                         <label value="Tanggal Berangkat:"/>
-                        <datebox id="tglBerangkat" value="@bind(vm.mtletter.tgl_berangkat)" hflex="1"/>
+                        <datebox id="tbBerangkat" value="@bind(vm.mtletter.tgl_berangkat)" hflex="1"  />
                     </row>
                     <row>
                         <label value="Tanggal Pulang:"/>
-                        <datebox id="tglPulang" value="@bind(vm.mtletter.tgl_pulang)" hflex="1"/>
+                        <datebox id="tbPulang" value="@bind(vm.mtletter.tgl_pulang)" hflex="1"/>
                     </row>
                     <row>
                         <label value="Tujuan:"/>
-                        <textbox id="tujuan" value="@bind(vm.mtletter.tujuan)" hflex="1"/>
+                        <textbox id="tbTujuan" value="@bind(vm.mtletter.tujuan)" hflex="1"/>
                     </row>
                     <row>
                         <label value="Keterangan:"/>
-                        <textbox id="keterangan" value="@bind(vm.mtletter.keterangan)" hflex="1"/>
+                        <textbox id="tbKeterangan" value="@bind(vm.mtletter.keterangan)" hflex="1"/>
                     </row>
                 </rows>
             </grid>
 
-            <div style="margin-top:10px;">
-                <button label="Submit" onClick="@command('submit')"/>
-                <button label="Reset" onClick="@command('reset')"/>
-            </div>
+           <div id="divFooter" class="card-footer" style="border: 0px; padding: 10px 0px 0px 0px; background-color: #ffffff; padding-right: 16px;" align="right">
+					<button id="btnCancel" label="Batal"
+						onClick="@command('doReset')" autodisable="self"
+						sclass="btn btn-default btn-sm" width="100px"
+						iconSclass="z-icon-times" />
+					<separator orient="vertical" />
+					<button id="btnSave" label="Simpan"
+						autodisable="self" sclass="btn btn-primary btn-sm" width="100px"
+						iconSclass="z-icon-save" onClick="@command('submit')" />
+				</div>
         </div>
     </window>
     <script>

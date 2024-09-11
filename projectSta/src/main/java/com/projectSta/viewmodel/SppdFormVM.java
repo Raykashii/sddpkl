@@ -1,6 +1,8 @@
 package com.projectSta.viewmodel;
 
 import java.util.Date;
+
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.zkoss.bind.annotation.AfterCompose;
@@ -14,37 +16,95 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import com.projectSta.dao.MtletterDAO;
 import com.projectSta.domain.Mtletter;
 import com.projectSta.dao.MemployeeDAO;
 import com.projectSta.domain.Memployee;
+import com.projectSta.domain.Msiswa;
 import com.projectSta.utils.db.StoreHibernateUtil;
+
+
+
 
 public class SppdFormVM {
 
+	
     private Mtletter mtletter = new Mtletter(); // Inisialisasi objek untuk form
     private boolean isInsert = true; // Menandakan mode insert atau update
 
+	private MtletterDAO letdao = new MtletterDAO();
+
+    
+	private Session session;
+	private Transaction transaction;
+    
     @Wire
     private Combobox cbEmployeegroup;
 
     private Mtletter obj;
+    
+	@Wire
+	private Textbox tbTujuan, tbKeterangan;
+	
+	@Wire
+	private Div divFooter;
+	
+	@Wire
+	private Datebox tbPulang, tbBerangkat;
+	
+	@Wire
+	private Window winUserform;
+	
+	@Wire
+	private Button btnSave, btnCancel;
 
-    @AfterCompose
-    public void afterCompose(@ContextParam(ContextType.VIEW) Component view,
-                             @ExecutionArgParam("obj") Mtletter obj) {
-        Selectors.wireComponents(view, this, false);
-        doReset();
+	@AfterCompose
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view,
+	                         @ExecutionArgParam("isEdit") final String isEdit, 
+	                         @ExecutionArgParam("isDetail") final String isDetail,
+	                         @ExecutionArgParam("obj") Mtletter obj) {
+	    Selectors.wireComponents(view, this, false);
+	    doReset();
 
-        if (obj != null) {
-            this.obj = obj;
-            isInsert = false;
-            cbEmployeegroup.setValue(obj.getMemployeefk().getNama());
-        }
-    }
+	    if (obj != null) {
+	        this.obj = obj;
+	        this.mtletter = obj; 
+	        isInsert = false;
+
+	        cbEmployeegroup.setValue(obj.getMemployeefk().getNama());
+	        
+	        tbBerangkat.setValue(obj.getTgl_berangkat());
+	        tbPulang.setValue(obj.getTgl_pulang());
+	        tbTujuan.setValue(obj.getTujuan());
+	        tbKeterangan.setValue(obj.getKeterangan());
+	        
+	        if (isEdit != null && isEdit.equals("Y")) {
+				btnSave.setLabel(Labels.getLabel("common.update"));
+			}
+	    }
+
+	    if (isDetail != null && isDetail.equals("Y")) {
+	        cbEmployeegroup.setDisabled(true);
+	        tbBerangkat.setDisabled(true);
+	        tbPulang.setDisabled(true);
+	        tbTujuan.setReadonly(true);
+	        tbKeterangan.setReadonly(true);
+
+	        divFooter.setVisible(false);
+	        winUserform.setStyle("border-radius: 7px; background-color: #2F3061;");
+	    }
+	}
+
+    
 
     @Command
     @NotifyChange("mtletter")
@@ -122,7 +182,7 @@ public class SppdFormVM {
         return content.toString().replace("'", "\\'"); // Escape single quotes for JavaScript
     }
 
- 
+  
 
 
 
@@ -168,6 +228,8 @@ public class SppdFormVM {
         }
         return true;
     }
+    
+    
 
     public Mtletter getMtletter() {
         return mtletter;
